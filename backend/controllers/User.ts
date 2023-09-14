@@ -1,7 +1,7 @@
 import { User } from "../models/userModel"
 import { Request, Response } from "../types/express"
 import crypto from "crypto";
-import  sendVerificationEmail  from "../utils/verifyEmail";
+import  { sendVerificationEmail } from "../utils/verifyEmail";
 
 /**
  * Create new order
