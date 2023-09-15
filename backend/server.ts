@@ -7,6 +7,9 @@ import cors from "cors";
 import jwt from "jsonwebtoken";
 import connectDB from "./config/db";
 
+// route
+import registerRoute from "./routes/userRoutes";
+
 
 const PORT = process.env.PORT || 5000;
 
@@ -23,6 +26,7 @@ app.get("/", (req: Request, res: Response) => {
   res.send("API IS RUNNING...");
 });
 
+app.use("/register", registerRoute)
 
 
 app.listen(PORT, () => {

@@ -2,7 +2,7 @@ import nodemailer from "nodemailer";
 import { Request, Response } from "../types/express";
 import { User } from "../models/userModel";
 
-const sendVerificationEmail =async(email, verificationToken) => {
+const sendVerificationEmail =async(email: string, verificationToken: string) => {
     // configuring email service
     const transporter = nodemailer.createTransport({
         service:"gmail",

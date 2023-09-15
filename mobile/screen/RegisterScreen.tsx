@@ -18,7 +18,20 @@ import {
 import GmailSignIn from "../component/Button/GmailSignIn";
 
 const RegisterScreen = () => {
-    const navigation = useNavigation()
+  const navigation = useNavigation()
+  const [name, setName] = useState<string>("")
+  const [email, setEmail] = useState<string>("")
+  const [password, setPassword] = useState<string>("")
+
+
+  const handleRegister = () => {
+    const user = {
+      name: name,
+      email: email,
+      password: password
+    }
+  }
+    
   return (
     <SafeAreaView style={styles.container}>
         <View>
@@ -103,7 +116,7 @@ const RegisterScreen = () => {
         <View style={{ marginTop: 80 }} />
 
         <Pressable
-        //   onPress={handleRegister}
+          onPress={handleRegister}
           style={styles.pressableRegister}
         >
           <Text style={styles.resgitrationText}>
@@ -119,18 +132,7 @@ const RegisterScreen = () => {
             Already have an account? Sign In
           </Text>
         </Pressable>
-<<<<<<< HEAD
-        <Pressable
-        //   onPress={gmailRegister}
-          style={styles.gmailRegister}
-        >
-          <Text style={styles.resgitrationText}>
-            Sign in with Gmail
-          </Text>
-        </Pressable>
-=======
             <GmailSignIn />
->>>>>>> mobile
         </KeyboardAvoidingView>
     </SafeAreaView>
   )
@@ -235,17 +237,5 @@ const styles = StyleSheet.create({
         color: "gray", 
         fontSize: 16 
     },
-<<<<<<< HEAD
-    gmailRegister: {
-        width: 200,
-        top:20,
-        backgroundColor: "#000",
-        borderRadius: 6,
-        marginLeft: "auto",
-        marginRight: "auto",
-        padding: 15,
-      }
-=======
   
->>>>>>> mobile
 })

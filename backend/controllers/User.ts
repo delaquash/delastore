@@ -9,7 +9,7 @@ import  { sendVerificationEmail } from "../utils/verifyEmail";
  * @access Private
  */
 
-const regsiter = async (req: Request, res: Response) => {
+const register = async (req: Request, res: Response) => {
     const { name,email, password } = req.body
     // check if user is already registered
     const existingUser = await User.findById({ email });
@@ -29,3 +29,5 @@ const regsiter = async (req: Request, res: Response) => {
     // send verification email to new user
     sendVerificationEmail(newUser.email, newUser.verifiedToken)
 }
+
+export { register }
