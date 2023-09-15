@@ -15,6 +15,7 @@ import {
   import { Ionicons } from "@expo/vector-icons";
   import { useNavigation } from "@react-navigation/native";
   import axios from "axios";
+import GmailSignIn from "../component/Button/GmailSignIn";
 
 const RegisterScreen = () => {
     const navigation = useNavigation()
@@ -118,6 +119,7 @@ const RegisterScreen = () => {
             Already have an account? Sign In
           </Text>
         </Pressable>
+<<<<<<< HEAD
         <Pressable
         //   onPress={gmailRegister}
           style={styles.gmailRegister}
@@ -126,6 +128,9 @@ const RegisterScreen = () => {
             Sign in with Gmail
           </Text>
         </Pressable>
+=======
+            <GmailSignIn />
+>>>>>>> mobile
         </KeyboardAvoidingView>
     </SafeAreaView>
   )
@@ -230,6 +235,7 @@ const styles = StyleSheet.create({
         color: "gray", 
         fontSize: 16 
     },
+<<<<<<< HEAD
     gmailRegister: {
         width: 200,
         top:20,
@@ -239,4 +245,7 @@ const styles = StyleSheet.create({
         marginRight: "auto",
         padding: 15,
       }
+=======
+  
+>>>>>>> mobile
 })

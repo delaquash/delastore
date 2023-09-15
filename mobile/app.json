@@ -21,10 +21,22 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.delaquash.delastore"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "expo": {
+      "android": {
+        "googleServicesFile": "./google-services.json"
+      },
+      "ios": {
+        "googleServicesFile": "./GoogleService-Info.plist"
+      },
+      "plugins": [
+        "@react-native-google-signin/google-signin"
+      ]
     }
   }
 }
