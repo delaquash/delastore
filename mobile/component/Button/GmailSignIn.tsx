@@ -1,5 +1,5 @@
 import React,{ useEffect} from 'react'
-import { Pressable, StyleSheet, Text } from 'react-native';
+import { Pressable, StyleSheet, Text, ToastAndroid } from 'react-native';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 
 const GmailSignIn = () => {
@@ -21,7 +21,12 @@ const GmailSignIn = () => {
     }
   return (
     <Pressable
-        //   onPress={gmailRegister}
+          onPress={()=> gmailRegister()
+            .then(gmail=> 
+            ToastAndroid.show(gmail.user + "", ToastAndroid.LONG)
+          ).catch(error=> {
+            ToastAndroid.show(error + "", ToastAndroid.LONG)
+          })}
           style={styles.gmailRegister}
         >
           <Text style={styles.resgitrationText}>
