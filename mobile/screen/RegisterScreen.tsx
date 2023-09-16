@@ -30,6 +30,20 @@ const RegisterScreen = () => {
       email: email,
       password: password
     }
+    // send post request to server
+    axios.post("http://localhost:5000/register", user)
+    .then((response)=>{
+      console.log(response)
+      Alert.alert("You have been signed in successfully..."
+      )
+      setName("")
+      setEmail("")
+      setPassword("")
+    })
+    .catch((error)=> {
+      console.log("Registration failed", error)
+      Alert.alert("Registration was not successful..")
+    })
   }
     
   return (
@@ -132,7 +146,7 @@ const RegisterScreen = () => {
             Already have an account? Sign In
           </Text>
         </Pressable>
-            <GmailSignIn />
+            {/* <GmailSignIn /> */}
         </KeyboardAvoidingView>
     </SafeAreaView>
   )
