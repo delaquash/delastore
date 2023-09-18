@@ -24,28 +24,31 @@ const RegisterScreen = () => {
   const [password, setPassword] = useState<string>("")
 
 
-  const handleRegister = () => {
-    const user = {
+  const handleRegister =async () => {
+    try {
+      const user = {
       name: name,
       email: email,
       password: password
     }
     // send post request to server
-    axios.post("http://localhost:5000/register", user)
-    .then((response)=>{
-      console.log(response)
-      Alert.alert("You have been signed in successfully..."
-      )
-      setName("")
-      setEmail("")
-      setPassword("")
-    })
-    .catch((error)=> {
-      console.log("Registration failed", error)
-      Alert.alert("Registration was not successful..")
-    })
-  }
-    
+      await axios.post("http://localhost:5000/register", user,{
+        headers:{'Content-Type':'application/json'}
+      }).then((response: any)=>{
+        console.log(response)
+        Alert.alert("You have been signed in successfully...")
+        setName("")
+        setEmail("")
+        setPassword("")
+      })
+      .catch((error: any)=> {
+        console.log("Registration failed", error)
+        Alert.alert("Registration was not successful..")
+      })
+    } catch (error) {
+      console.log(error);
+    }
+  
   return (
     <SafeAreaView style={styles.container}>
         <View>
@@ -130,7 +133,7 @@ const RegisterScreen = () => {
         <View style={{ marginTop: 80 }} />
 
         <Pressable
-          onPress={handleRegister}
+          // onPress={handleRegister}
           style={styles.pressableRegister}
         >
           <Text style={styles.resgitrationText}>
@@ -151,7 +154,7 @@ const RegisterScreen = () => {
     </SafeAreaView>
   )
 }
-
+}
 export default RegisterScreen
 
 const styles = StyleSheet.create({

@@ -11,6 +11,7 @@ export { };
  */
 
 const register = async (req: Request, res: Response) => {
+    try {
     const { name,email, password } = req.body
     // check if user is already registered
     const existingUser = await User.findOne({ email });
@@ -30,14 +31,14 @@ const register = async (req: Request, res: Response) => {
     // send verification email to new user
     sendVerificationEmail(newUser.email, newUser.verifiedToken);
 
-    // res.status(201).json({
-    //     message:
-    //       "Registration successful. Please check your email for verification.",
-    //   });
-    // } catch (error) {
-    //   console.log("Error during registration:", error); // Debugging statement
-    //   res.status(500).json({ message: "Registration failed" });
-    // }
+    res.status(201).json({
+        message:
+          "Registration successful. Please check your email for verification.",
+      });
+    } catch (error) {
+      console.log("Error during registration:", error); // Debugging statement
+      res.status(500).json({ message: "Registration failed" });
+    }
 }
 
 export { register };
