@@ -1,7 +1,8 @@
-import { User } from "../models/userModel"
-import { Request, Response } from "../types/express"
-import crypto from "crypto";
-import  { sendVerificationEmail } from "../utils/verifyEmail";
+export { };
+    import crypto from "crypto";
+    import { User } from "../models/userModel";
+    import { Request, Response } from "../types/express";
+    import { sendVerificationEmail } from "../utils/verifyEmail";
 
 /**
  * Create new order
@@ -12,13 +13,13 @@ import  { sendVerificationEmail } from "../utils/verifyEmail";
 const register = async (req: Request, res: Response) => {
     const { name,email, password } = req.body
     // check if user is already registered
-    const existingUser = await User.findById({ email });
+    const existingUser = await User.findOne({ email });
     if(existingUser) {
         return res.status(400).json({ message: "User already exist! Please sign in."})
     }
 
     // register new user
-    const newUser = new User({ name, email, password})
+    const newUser = new User({ name, email, password});
 
     // generate and store verificationToken
     newUser.verifiedToken = crypto.randomBytes(20).toString("hex");
@@ -27,7 +28,17 @@ const register = async (req: Request, res: Response) => {
     await newUser.save();
 
     // send verification email to new user
-    sendVerificationEmail(newUser.email, newUser.verifiedToken)
+    sendVerificationEmail(newUser.email, newUser.verifiedToken);
+
+    // res.status(201).json({
+    //     message:
+    //       "Registration successful. Please check your email for verification.",
+    //   });
+    // } catch (error) {
+    //   console.log("Error during registration:", error); // Debugging statement
+    //   res.status(500).json({ message: "Registration failed" });
+    // }
 }
 
-export { register }
+export { register };
+

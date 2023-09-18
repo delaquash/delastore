@@ -1,26 +1,21 @@
-import express, { Request, Response } from "express";
-import bodyParser from "body-parser";
-import mongoose from "mongoose";
-import crypto from "crypto";
-import nodemailer from "nodemailer";
+export { };
+  import bodyParser from "body-parser";
+  import express, { Request, Response } from "express";
+// import mongoose from "mongoose";
 import cors from "cors";
-import jwt from "jsonwebtoken";
+import dotenv from 'dotenv';
 import connectDB from "./config/db";
+dotenv.config();
 
 // route
 import registerRoute from "./routes/userRoutes";
-
-
-const PORT = process.env.PORT || 5000;
-
-const app = express();
-app.use(express.json());
-app.use(cors())
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json())
-
-
 connectDB();
+const app = express();
+
+app.use(express.json());
+app.use(cors());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 app.get("/", (req: Request, res: Response) => {
   res.send("API IS RUNNING...");
@@ -28,6 +23,7 @@ app.get("/", (req: Request, res: Response) => {
 
 app.use("/register", registerRoute)
 
+const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
     console.log(`Server running on mode on port ${PORT}`);

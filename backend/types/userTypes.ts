@@ -3,7 +3,7 @@ export interface IUserProps {
     email: string;
     password: string;
     verified: boolean;
-    verifiedToken: string | undefined;
+    verifiedToken: any;
     addresses: addressProps[];
     order: string[];
     createdAt: Date
