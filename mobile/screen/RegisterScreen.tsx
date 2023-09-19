@@ -15,7 +15,7 @@ import {
   import { Ionicons } from "@expo/vector-icons";
   import { useNavigation } from "@react-navigation/native";
   import axios from "axios";
-import GmailSignIn from "../component/Button/GmailSignIn";
+// import GmailSignIn from "../component/Button/GmailSignIn";
 
 const RegisterScreen = () => {
   const navigation = useNavigation()
@@ -24,30 +24,49 @@ const RegisterScreen = () => {
   const [password, setPassword] = useState<string>("")
 
 
-  const handleRegister =async () => {
-    try {
-      const user = {
+  const handleRegister = () => {
+    const user = {
       name: name,
       email: email,
       password: password
     }
-    // send post request to server
-      await axios.post("http://localhost:5000/register", user,{
-        headers:{'Content-Type':'application/json'}
-      }).then((response: any)=>{
-        console.log(response)
-        Alert.alert("You have been signed in successfully...")
-        setName("")
-        setEmail("")
-        setPassword("")
+    // try {
+    // // send post request to server
+    //   await axios.post("http://localhost:5000/register", user,{
+    //     headers:{'Content-Type':'application/json'}
+    //   }).then((response: any)=>{
+    //     console.log(response)
+    //     Alert.alert("You have been signed in successfully...")
+    //     setName("")
+    //     setEmail("")
+    //     setPassword("")
+    //   })
+    //   .catch((error: any)=> {
+    //     console.log("Registration failed", error)
+    //     Alert.alert("Registration was not successful..")
+    //   })
+    // } catch (error) {
+    //   console.log(error);
+    // }
+    axios
+      .post("http://localhost:5000/register", user)
+      .then((response) => {
+        console.log(response);
+        Alert.alert(
+          "Registration successful",
+          "You have been registered Successfully"
+        );
+        setName("");
+        setEmail("");
+        setPassword("");
       })
-      .catch((error: any)=> {
-        console.log("Registration failed", error)
-        Alert.alert("Registration was not successful..")
-      })
-    } catch (error) {
-      console.log(error);
-    }
+      .catch((error) => {
+        Alert.alert(
+          "Registration Error",
+          "An error occurred while registering"
+        );
+        console.log("registration failed", error);
+      });
   
   return (
     <SafeAreaView style={styles.container}>
@@ -133,7 +152,7 @@ const RegisterScreen = () => {
         <View style={{ marginTop: 80 }} />
 
         <Pressable
-          // onPress={handleRegister}
+          onPress={handleRegister}
           style={styles.pressableRegister}
         >
           <Text style={styles.resgitrationText}>
