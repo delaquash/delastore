@@ -11,9 +11,9 @@ dotenv.config();
 import registerRoute from "./routes/userRoutes";
 connectDB();
 const app = express();
-
+app.use(cors({origin: true, credentials: true}));
 app.use(express.json());
-app.use(cors());
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 

@@ -17,7 +17,7 @@ import {
   import axios from "axios";
 // import GmailSignIn from "../component/Button/GmailSignIn";
 
-const RegisterScreen = () => {
+const Register = () => {
   const navigation = useNavigation()
   const [name, setName] = useState<string>("")
   const [email, setEmail] = useState<string>("")
@@ -30,28 +30,10 @@ const RegisterScreen = () => {
       email: email,
       password: password
     }
-    // try {
-    // // send post request to server
-    //   await axios.post("http://localhost:5000/register", user,{
-    //     headers:{'Content-Type':'application/json'}
-    //   }).then((response: any)=>{
-    //     console.log(response)
-    //     Alert.alert("You have been signed in successfully...")
-    //     setName("")
-    //     setEmail("")
-    //     setPassword("")
-    //   })
-    //   .catch((error: any)=> {
-    //     console.log("Registration failed", error)
-    //     Alert.alert("Registration was not successful..")
-    //   })
-    // } catch (error) {
-    //   console.log(error);
-    // }
-    axios
-      .post("http://localhost:5000/register", user)
-      .then((response) => {
-        console.log(response);
+       axios.post("http://localhost:5000/register", user,
+        {headers: {'Content-Type': "application/json",'Accept': "application/json"}})
+        .then((response) => {
+        console.log(response.data);
         Alert.alert(
           "Registration successful",
           "You have been registered Successfully"
@@ -61,14 +43,14 @@ const RegisterScreen = () => {
         setPassword("");
       })
       .catch((error) => {
+        console.log(error);
         Alert.alert(
           "Registration Error",
           "An error occurred while registering"
-        );
-        console.log("registration failed", error);
+        )
       });
-  
-  return (
+  }
+    return (
     <SafeAreaView style={styles.container}>
         <View>
             <Image 
@@ -173,8 +155,7 @@ const RegisterScreen = () => {
     </SafeAreaView>
   )
 }
-}
-export default RegisterScreen
+export default Register;
 
 const styles = StyleSheet.create({
     container: {

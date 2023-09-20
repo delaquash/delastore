@@ -4,7 +4,7 @@ const connectDB = async () => {
     if (process.env.MONGO_URI !== undefined) {
       try {
         const conn = await mongoose.connect(process.env.MONGO_URI, {
-          retryWrites: true
+          retryWrites: true,
         });
         console.log(`MongoDB Connected: ${conn.connection.host}`);
       } catch (error) {
