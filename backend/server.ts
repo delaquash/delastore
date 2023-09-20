@@ -21,7 +21,7 @@ app.get("/", (req: Request, res: Response) => {
   res.send("API IS RUNNING...");
 });
 
-app.use("/register", registerRoute)
+app.use("/", registerRoute)
 
 const PORT = process.env.PORT || 5000;
 

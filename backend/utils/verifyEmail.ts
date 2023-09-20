@@ -1,6 +1,7 @@
 import nodemailer from "nodemailer";
 import { Request, Response } from "../types/express";
 import { User } from "../models/userModel";
+import crypto from "crypto";
 
 const sendVerificationEmail =async(email: string, verificationToken: string) => {
     // configuring email service
@@ -48,4 +49,10 @@ const verifyEmail = async (req: Request, res: Response) => {
     }
 }
 
-export  { sendVerificationEmail, verifyEmail };
+const generateSecretkey = () => {
+    const secretKey = crypto.randomBytes(32).toString("hex");
+
+    return secretKey;
+}
+
+export  { sendVerificationEmail, verifyEmail, generateSecretkey };

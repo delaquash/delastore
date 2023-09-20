@@ -2,11 +2,11 @@ export { };
     import crypto from "crypto";
     import { User } from "../models/userModel";
     import { Request, Response } from "../types/express";
-    import { sendVerificationEmail } from "../utils/verifyEmail";
-
+    import { generateSecretkey, sendVerificationEmail } from "../utils/verifyEmail";
+    import jwt from "jsonwebtoken";
 /**
  * Create new order
- * @route POST /api/user
+ * @route POST /register
  * @access Private
  */
 
@@ -41,5 +41,30 @@ const register = async (req: Request, res: Response) => {
     }
 }
 
-export { register };
+/**
+ * Create new order
+ * @route Login /login
+ * @access Private
+ */
+const secretKey = generateSecretkey()
+
+const login = async (req: Request, res: Response) => {
+  try {
+
+    const { email, password }= req.body
+    const user = await User.findOne({ email });
+      // if user that is trying to login does not esit
+    if(!user || password !== user?.password){
+      return res.status(401).json({message: "Invalid email or password"})
+    }
+
+    // generate token
+    const token = jwt.sign({ userId: user._id}, secretKey)
+    res.status(200).json({token})
+  } catch (error) {
+    res.status(500).json({ message: "Login failed"})
+  }
+}
+
+export { register, login };
 
