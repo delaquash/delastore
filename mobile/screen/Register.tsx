@@ -1,20 +1,18 @@
+import { AntDesign, Ionicons, MaterialIcons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
+import React, { useState } from "react";
 import {
-    StyleSheet,
-    Text,
-    View,
-    SafeAreaView,
-    Pressable,
-    Image,
-    KeyboardAvoidingView,
-    TextInput,
-    Alert,
-  } from "react-native";
-  import React, { useState } from "react";
-  import { MaterialIcons } from "@expo/vector-icons";
-  import { AntDesign } from "@expo/vector-icons";
-  import { Ionicons } from "@expo/vector-icons";
-  import { useNavigation } from "@react-navigation/native";
-  import axios from "axios";
+  Alert,
+  KeyboardAvoidingView,
+  Pressable,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TextInput,
+  View
+} from "react-native";
+import api from "../helpers/axios";
+
 // import GmailSignIn from "../component/Button/GmailSignIn";
 
 const Register = () => {
@@ -24,41 +22,45 @@ const Register = () => {
   const [password, setPassword] = useState<string>("")
 
 
-  const handleRegister = () => {
+  const handleRegister = async () => {
     const user = {
       name: name,
       email: email,
       password: password
     }
-       axios.post("http://localhost:5000/register", user,
-        {headers: {'Content-Type': "application/json",'Accept': "application/json"}})
-        .then((response) => {
-        console.log(response.data);
-        Alert.alert(
-          "Registration successful",
-          "You have been registered Successfully"
-        );
-        setName("");
-        setEmail("");
-        setPassword("");
-      })
-      .catch((error) => {
-        console.log(error);
-        Alert.alert(
-          "Registration Error",
-          "An error occurred while registering"
-        )
-      });
+    console.log(user);
+
+    const config = {
+      method: "POST",
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify(user)
+    }
+    try {
+      const res =  await api.post("/register", user)
+
+        if(res.status !== 200 && res.status !== 201){
+          throw new Error("Registration error...")
+        }
+          const data = await res.data
+          Alert.alert(data.message);
+          setName("");
+          setEmail("");
+          setPassword("");
+          console.log(data.user);
+      } catch (error:any) {
+          console.log(error);
+            Alert.alert(error.message)
+      }   
   }
     return (
     <SafeAreaView style={styles.container}>
         <View>
-            <Image 
-                source={{
-                    uri: "https://assets.stickpng.com/thumbs/6160562276000b00045a7d97.png",
-                }}
+            {/* <Image 
+                // source={{
+                //     uri: "https://assets.stickpng.com/thumbs/6160562276000b00045a7d97.png",
+                // }}
                 style={styles.img}
-            />
+            /> */}
         </View>
         <KeyboardAvoidingView>
         <View style={styles.register}>
@@ -76,8 +78,8 @@ const Register = () => {
               style={{ marginLeft: 8 }}
             />
             <TextInput
-            //   value={name}
-            //   onChangeText={(text) => setName(text)}
+              value={name}
+              onChangeText={(text) => setName(text)}
               style={styles.textInput}
               placeholder="enter your name"
             />
@@ -95,8 +97,8 @@ const Register = () => {
             />
 
             <TextInput
-            //   value={email}
-            //   onChangeText={(text) => setEmail(text)}
+              value={email}
+              onChangeText={(text) => setEmail(text)}
               style={styles.emailBox}
               placeholder="enter your Email"
             />
@@ -114,8 +116,8 @@ const Register = () => {
             />
 
             <TextInput
-            //   value={password}
-            //   onChangeText={(text) => setPassword(text)}
+              value={password}
+              onChangeText={(text) => setPassword(text)}
               secureTextEntry={true}
               style={styles.passwordInput}
               placeholder="enter your Password"

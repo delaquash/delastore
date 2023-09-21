@@ -19,13 +19,17 @@ const LoginScreen = () => {
   const navigation = useNavigation();
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+
+  // const registerNavigate = () => {
+
+  // }
   return (
     <SafeAreaView style={styles.container}>
       <View>
         <Image 
-                source={{
-                    uri: "https://assets.stickpng.com/thumbs/6160562276000b00045a7d97.png",
-                }}
+                // source={{
+                //     uri: "https://assets.stickpng.com/thumbs/6160562276000b00045a7d97.png",
+                // }}
                 style={styles.img}
         />
       </View>
@@ -100,7 +104,7 @@ const LoginScreen = () => {
         </Pressable>
 
         <Pressable
-          onPress={() => navigation.navigate("Register")}
+          // onPress={() => navigation.navigate()}
           style={{ marginTop: 15 }}
         >
           <Text style={styles.signUp}>

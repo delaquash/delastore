@@ -2,10 +2,10 @@
   "name": "server",
   "version": "1.0.0",
   "description": "A backend API for delastore",
-  "type": "commonjs",
   "main": "server.ts",
   "scripts": {
-    "start": "nodemon --watch \"*.ts\" --exec \"ts-node\" ./server.ts"
+    "start": "nodemon server.ts",
+    "compile": "tsc"
   },
   "author": "Olaide Emmanuel",
   "license": "MIT",
@@ -25,9 +25,11 @@
     "@types/express": "^4.17.17",
     "@types/jsonwebtoken": "^9.0.2",
     "@types/mongoose": "^5.11.97",
+    "@types/node": "^20.6.3",
     "@types/nodemailer": "^6.4.10",
     "@types/nodemon": "^1.19.2",
-    "ts-node-dev": "^2.0.0",
+    "save": "^2.9.0",
+    "ts-node": "^10.9.1",
     "typescript": "^5.2.2"
   }
 }
