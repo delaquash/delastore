@@ -28,13 +28,7 @@ const Register = () => {
       email: email,
       password: password
     }
-    console.log(user);
-
-    const config = {
-      method: "POST",
-      headers:{'Content-Type':'application/json'},
-      body: JSON.stringify(user)
-    }
+   
     try {
       const res =  await api.post("/register", user)
 
@@ -46,7 +40,6 @@ const Register = () => {
           setName("");
           setEmail("");
           setPassword("");
-          console.log(data.user);
       } catch (error:any) {
           console.log(error);
             Alert.alert(error.message)

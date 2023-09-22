@@ -1,48 +1,53 @@
+import { AntDesign, MaterialIcons } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useNavigation } from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack";
+import React, { useState } from "react";
+
 import {
+  KeyboardAvoidingView,
+  Pressable,
+  SafeAreaView,
   StyleSheet,
   Text,
-  View,
-  SafeAreaView,
-  Image,
-  KeyboardAvoidingView,
   TextInput,
-  Pressable,
+  View,
 } from "react-native";
-import React, { useState,useEffect } from "react";
-import { MaterialIcons } from "@expo/vector-icons";
-import { AntDesign } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
-import axios from "axios";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import api from "../helpers/axios";
+import { ScreenStackParamList } from "../navigation/StackNavigator";
+import { Alert } from "react-native";
+
+type registerScreenProp = StackNavigationProp<ScreenStackParamList, "Register">;
 
 const LoginScreen = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<registerScreenProp>();
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
-  // const registerNavigate = () => {
-
-  // }
+  const handleLogin = async () => {
+    const login = {
+      email: email,
+      password: password,
+    };
+    try {
+      const res = await api.post("/login", login);
+      const token = await res.data.token
+      console.log(token);
+      AsyncStorage.setItem("authToken", token);
+      navigation.navigate("Home");
+    } catch (error) {
+      console.log(error, "err");
+      Alert.alert("Loin err. Please check email and try again...")
+    }
+  };
   return (
     <SafeAreaView style={styles.container}>
-      <View>
-        <Image 
-                // source={{
-                //     uri: "https://assets.stickpng.com/thumbs/6160562276000b00045a7d97.png",
-                // }}
-                style={styles.img}
-        />
-      </View>
-      <KeyboardAvoidingView>
+      <KeyboardAvoidingView style={{ marginTop: 10 }}>
         <View style={styles.login}>
-            <Text style={styles.loginText}>
-                Login to your account
-            </Text>
+          <Text style={styles.loginText}>Login to your account</Text>
         </View>
         <View style={{ marginTop: 70 }}>
-          <View
-            style={styles.inputContainer}
-          >
+          <View style={styles.inputContainer}>
             <MaterialIcons
               style={{ marginLeft: 8 }}
               name="email"
@@ -51,8 +56,8 @@ const LoginScreen = () => {
             />
 
             <TextInput
-              // value={email}
-              // onChangeText={(text) => setEmail(text)}
+              value={email}
+              onChangeText={(text) => setEmail(text)}
               style={styles.emailInput}
               placeholder="enter your Email"
             />
@@ -60,9 +65,7 @@ const LoginScreen = () => {
         </View>
 
         <View style={{ marginTop: 10 }}>
-          <View
-            style={styles.passwordInput}
-          >
+          <View style={styles.passwordInput}>
             <AntDesign
               name="lock1"
               size={24}
@@ -71,8 +74,8 @@ const LoginScreen = () => {
             />
 
             <TextInput
-              // value={password}
-              // onChangeText={(text) => setPassword(text)}
+              value={password}
+              onChangeText={(text) => setPassword(text)}
               secureTextEntry={true}
               style={styles.passwordTextInput}
               placeholder="enter your Password"
@@ -80,63 +83,52 @@ const LoginScreen = () => {
           </View>
         </View>
 
-        <View
-          style={styles.loginView}
-        >
+        <View style={styles.loginView}>
           <Text>Keep me logged in</Text>
 
-          <Text style={styles.forgotPassword}>
-            Forgot Password
-          </Text>
+          <Text style={styles.forgotPassword}>Forgot Password</Text>
         </View>
 
         <View style={{ marginTop: 80 }} />
 
-        <Pressable
-          // onPress={handleLogin}
-          style={styles.loginPressable}
-        >
-          <Text
-            style={styles.loginTextName}
-          >
-            Login
-          </Text>
+        <Pressable onPress={handleLogin} style={styles.loginPressable}>
+          <Text style={styles.loginTextName}>Login</Text>
         </Pressable>
 
         <Pressable
-          // onPress={() => navigation.navigate()}
+          onPress={() => navigation.navigate("Register")}
           style={{ marginTop: 15 }}
         >
-          <Text style={styles.signUp}>
-            Don't have an account? Sign Up
-          </Text>
+          <Text style={styles.signUp}>Don't have an account? Sign Up</Text>
         </Pressable>
       </KeyboardAvoidingView>
     </SafeAreaView>
-  )
-}
+  );
+};
 
-export default LoginScreen
+export default LoginScreen;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1, 
-    backgroundColor: "white", 
+    flex: 1,
+
+    backgroundColor: "white",
     alignItems: "center",
-    marginTop:50
+    marginTop: 50,
   },
   img: {
-    width:150,
-    height:100,
+    width: 150,
+    height: 100,
   },
   login: {
-    alignItems: "center"
+    alignItems: "center",
+    marginTop: 80,
   },
   loginText: {
     fontSize: 17,
     fontWeight: "bold",
     marginTop: 12,
-    color: "#041E42"
+    color: "#041E42",
   },
   inputContainer: {
     flexDirection: "row",
@@ -176,10 +168,10 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     width: 300,
     // fontSize: password ? 16 : 16,
-  }, 
-  forgotPassword: { 
-    color: "#007FFF", 
-    fontWeight: "500"
+  },
+  forgotPassword: {
+    color: "#007FFF",
+    fontWeight: "500",
   },
   loginView: {
     marginTop: 12,
@@ -193,8 +185,9 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
   },
-  signUp:{ 
-    textAlign: "center", 
+  signUp: {
+    textAlign: "center",
     color: "gray",
-    fontSize: 16 }
-})
+    fontSize: 16,
+  },
+});
