@@ -1,9 +1,10 @@
 import React from 'react';
-import { NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Login from '../screen/Login';
 import Register from '../screen/Register';
 import Home from '../screen/Home';
+
 
 export type ScreenStackParamList = {
     Login: undefined
@@ -14,6 +15,8 @@ export type ScreenStackParamList = {
 const Stack = createNativeStackNavigator<ScreenStackParamList>()
 
 const StackNavigator = () => {
+  const navigation = useNavigation()
+  // const homeNavigation = navigation.navigate()
   return (
     <NavigationContainer>
       <Stack.Navigator>

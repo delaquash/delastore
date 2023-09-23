@@ -21,6 +21,7 @@ type registerScreenProp = StackNavigationProp<ScreenStackParamList, "Register">;
 
 const LoginScreen = () => {
   const navigation = useNavigation<registerScreenProp>();
+  const homeNavigation = navigation.navigate("Login", {screen: "Home"})
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
@@ -37,7 +38,7 @@ const LoginScreen = () => {
       navigation.navigate("Home");
     } catch (error) {
       console.log(error, "err");
-      Alert.alert("Loin err. Please check email and try again...")
+      Alert.alert("Login err. Please check email and try again...")
     }
   };
   return (
