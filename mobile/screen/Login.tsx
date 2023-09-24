@@ -3,8 +3,9 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import React, { useState } from "react";
-
+import { loginProps } from "../types/types";
 import {
+  Alert,
   KeyboardAvoidingView,
   Pressable,
   SafeAreaView,
@@ -14,19 +15,17 @@ import {
   View,
 } from "react-native";
 import api from "../helpers/axios";
-import { ScreenStackParamList } from "../navigation/StackNavigator";
-import { Alert } from "react-native";
 
-type registerScreenProp = StackNavigationProp<ScreenStackParamList, "Register">;
+
 
 const LoginScreen = () => {
-  const navigation = useNavigation<registerScreenProp>();
-  const homeNavigation = navigation.navigate("Login", {screen: "Home"})
+  const navigation = useNavigation();
+
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
   const handleLogin = async () => {
-    const login = {
+    const login: loginProps = {
       email: email,
       password: password,
     };
@@ -34,10 +33,11 @@ const LoginScreen = () => {
       const res = await api.post("/login", login);
       const token = await res.data.token
       console.log(token);
-      AsyncStorage.setItem("authToken", token);
+       await AsyncStorage.setItem("authToken", token);
+    
       navigation.navigate("Home");
     } catch (error) {
-      console.log(error, "err");
+      console.log(error ,"err");
       Alert.alert("Login err. Please check email and try again...")
     }
   };

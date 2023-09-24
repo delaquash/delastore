@@ -15,13 +15,16 @@ export type ScreenStackParamList = {
 const Stack = createNativeStackNavigator<ScreenStackParamList>()
 
 const StackNavigator = () => {
-  const navigation = useNavigation()
+  // const navigation = useNavigation()
   // const homeNavigation = navigation.navigate()
   return (
     <NavigationContainer>
-      <Stack.Navigator>
-          {/* <Stack.Screen name='Register' component={Register} options={{ headerShown : false }} /> */}
+      <Stack.Navigator 
+      // initialRouteName="Home"
+      > 
+          
           <Stack.Screen name='Login' component={Login}  options={{ headerShown : false }} />
+          <Stack.Screen name='Register' component={Register} options={{ headerShown : false }} />
           <Stack.Screen name="Home" component={Home} options={{ headerShown : false }} />
       </Stack.Navigator>
     </NavigationContainer>
