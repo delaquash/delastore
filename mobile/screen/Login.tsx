@@ -17,7 +17,6 @@ import {
 import api from "../helpers/axios";
 
 
-
 const LoginScreen = () => {
   const navigation = useNavigation();
 
@@ -32,10 +31,8 @@ const LoginScreen = () => {
     try {
       const res = await api.post("/login", login);
       const token = await res.data.token
-      console.log(token);
        await AsyncStorage.setItem("authToken", token);
-    
-      navigation.navigate("Home");
+      navigation.navigate("Main");
     } catch (error) {
       console.log(error ,"err");
       Alert.alert("Login err. Please check email and try again...")

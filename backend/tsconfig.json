@@ -25,7 +25,7 @@
     "moduleDetection": "force",                        /* Control what method is used to detect module-format JS files. */
 
     /* Modules */
-    "module": "CommonJS",
+    "module": "NodeNext",
 
                                    /* Specify what module code is generated. */
     // "rootDir": "./",                                  /* Specify the root folder within your source files. */
