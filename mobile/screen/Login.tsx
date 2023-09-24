@@ -1,9 +1,7 @@
 import { AntDesign, MaterialIcons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
-import { StackNavigationProp } from "@react-navigation/stack";
-import React, { useState } from "react";
-import { loginProps } from "../types/types";
+import React, { useEffect, useState } from "react";
 import {
   Alert,
   KeyboardAvoidingView,
@@ -15,13 +13,27 @@ import {
   View,
 } from "react-native";
 import api from "../helpers/axios";
-
+import { loginProps } from "../types/types";
 
 const LoginScreen = () => {
   const navigation = useNavigation();
 
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+
+  useEffect(() => {
+    const checkLoginStatus = async () => {
+      try {
+        const getToken = await AsyncStorage.getItem("authToken");
+        if (getToken) {
+          navigation.navigate("Main");
+        }
+      } catch (error) {
+        console.log("error message is", error);
+      }
+    };
+    checkLoginStatus();
+  }, []);
 
   const handleLogin = async () => {
     const login: loginProps = {
@@ -30,12 +42,12 @@ const LoginScreen = () => {
     };
     try {
       const res = await api.post("/login", login);
-      const token = await res.data.token
-       await AsyncStorage.setItem("authToken", token);
+      const token = await res.data.token;
+      await AsyncStorage.setItem("authToken", token);
       navigation.navigate("Main");
     } catch (error) {
-      console.log(error ,"err");
-      Alert.alert("Login err. Please check email and try again...")
+      console.log(error, "err");
+      Alert.alert("Login err. Please check email and try again...");
     }
   };
   return (
