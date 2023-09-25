@@ -4,8 +4,9 @@ import { AntDesign, Feather, Ionicons, Entypo, MaterialIcons } from "@expo/vecto
 import { deals, images, list, offers } from '../data';
 import   ImageSliderBox, {SliderBox}   from "react-native-image-slider-box";
 import axios from "axios";
-// import ProductItem from "../components/ProductItem";
+import ProductItem from "../component/ProductItem";
 import DropDownPicker from "react-native-dropdown-picker";
+import { product } from "../component/ProductItem";
 // import { useNavigation } from "@react-navigation/native";
 // import { useSelector } from "react-redux";
 // import { BottomModal, SlideAnimation, ModalContent } from "react-native-modals";
@@ -28,7 +29,7 @@ const Home = () => {
     }
     fetchData()
   }, [])
-  console.log(products)
+  // console.log(products)
   return (
     <SafeAreaView style={styles.safeAreaView}>
       <ScrollView>
@@ -99,14 +100,18 @@ const Home = () => {
                 ))}
           </ScrollView>
           <Text style={styles.borderlineText} />
-          <View style={styles.dropDownView}>
-            {products.map((product)=> (
-              
-            ))}
+          {/* <View style={styles.dropDownView}> */}
+            
           {/* <DropDownPicker
 
                 style={styles.dropdownPicker}
               /> */}
+          {/* </View> */}
+
+          <View style={styles.productView}>
+              {products.map((product, index)=> (
+                <ProductItem product={product} key={index} />
+              ))}
           </View>
       </ScrollView>
     </SafeAreaView>
@@ -227,4 +232,9 @@ const styles = StyleSheet.create({
     height: 30,
     // marginBottom: open() ? 120 : 15,
   },
+  productView: {
+    flexDirection: "row",
+    alignItems: "center",
+    flexWrap: "wrap",
+  }
 })
