@@ -37,13 +37,13 @@ export const list: listDataProps[]= [
   ];
 
 
-  const images: string[] = [
+  export const images: string[] = [
     "https://img.etimg.com/thumb/msid-93051525,width-1070,height-580,imgsize-2243475,overlay-economictimes/photo.jpg",
     "https://images-eu.ssl-images-amazon.com/images/G/31/img22/Wireless/devjyoti/PD23/Launches/Updated_ingress1242x550_3.gif",
     "https://images-eu.ssl-images-amazon.com/images/G/31/img23/Books/BB/JULY/1242x550_Header-BB-Jul23.jpg",
   ];
 
-  const deals: dealProps[] = [
+  export const deals: dealProps[] = [
     {
       id: "20",
       title: "OnePlus Nord CE 3 Lite 5G (Pastel Lime, 8GB RAM, 128GB Storage)",
@@ -97,8 +97,8 @@ export const list: listDataProps[]= [
       id: "40",
       title:
         "realme narzo N55 (Prime Blue, 4GB+64GB) 33W Segment Fastest Charging | Super High-res 64MP Primary AI Camera",
-      oldPrice: 12999,
-      price: 10999,
+      oldPrice: 120999,
+      price: 110999,
       image:
         "https://images-eu.ssl-images-amazon.com/images/G/31/tiyesum/N55/June/xcm_banners_2022_in_bau_wireless_dec_580x800_v1-n55-marchv2-mayv3-v4_580x800_in-en.jpg",
       carouselImages: [
@@ -106,10 +106,12 @@ export const list: listDataProps[]= [
         "https://m.media-amazon.com/images/I/61og60CnGlL._SX679_.jpg",
         "https://m.media-amazon.com/images/I/61twx1OjYdL._SX679_.jpg",
       ],
+      color: "Icy Silver",
+      size: "6 GB RAM 64GB Storage",
     },
   ];
 
-  const offers: offerProps[] = [
+  export const offers: offerProps[] = [
     {
       id: "0",
       title:

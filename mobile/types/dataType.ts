@@ -15,8 +15,8 @@ export interface dealProps {
     size: string;
 }
 
-interface offerProps extends dealProps {
+export interface offerProps extends dealProps {
     offer: string;
 }
 
-export interface offerProps{}
+// export interface offerProps{}
