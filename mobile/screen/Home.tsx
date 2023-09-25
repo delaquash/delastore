@@ -6,7 +6,7 @@ import   ImageSliderBox, {SliderBox}   from "react-native-image-slider-box";
 import axios from "axios";
 import ProductItem from "../component/ProductItem";
 import DropDownPicker from "react-native-dropdown-picker";
-import { product } from "../component/ProductItem";
+import { ItemProps } from '../types/types';
 // import { useNavigation } from "@react-navigation/native";
 // import { useSelector } from "react-redux";
 // import { BottomModal, SlideAnimation, ModalContent } from "react-native-modals";
@@ -17,6 +17,13 @@ import { product } from "../component/ProductItem";
 const Home = () => {
   const [ open, setOpen ] = useState<boolean>(false)
   const [ products, setProducts ] = useState<[]>([])
+  const [ category, setCategory ] = useState<string>("jewelry");
+  const [ items, setItems ] = useState<ItemProps[]>([
+    { label: "Men's clothing", value: "men's clothing" },
+    { label: "jewelery", value: "jewelery" },
+    { label: "electronics", value: "electronics" },
+    { label: "women's clothing", value: "women's clothing" },
+  ])
 
   useEffect(  ()=> {
     const fetchData = async () => {
@@ -29,7 +36,7 @@ const Home = () => {
     }
     fetchData()
   }, [])
-  // console.log(products)
+  
   return (
     <SafeAreaView style={styles.safeAreaView}>
       <ScrollView>
@@ -100,13 +107,23 @@ const Home = () => {
                 ))}
           </ScrollView>
           <Text style={styles.borderlineText} />
-          {/* <View style={styles.dropDownView}> */}
+          <View style={styles.dropDownView}>
             
-          {/* <DropDownPicker
-
-                style={styles.dropdownPicker}
-              /> */}
-          {/* </View> */}
+           <DropDownPicker  
+              open={open}
+              value={category} //genderValue
+              items={items}
+              setOpen={setOpen}
+              setValue={setCategory}
+              setItems={setItems}
+              placeholder="choose category"
+              // placeholderStyle={styles.placeholderStyles}
+              // onOpen={onGenderOpen}
+              // onChangeValue={onChange}
+              zIndex={3000}
+              zIndexInverse={1000}
+              /> 
+           </View>
 
           <View style={styles.productView}>
               {products.map((product, index)=> (
