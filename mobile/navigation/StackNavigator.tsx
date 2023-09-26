@@ -8,12 +8,14 @@ import { Entypo , AntDesign, Ionicons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Cart from '../screen/Cart';
 import Profile from '../screen/Profile';
+import ProductInfo from '../screen/ProductInfo';
 
 
 export type ScreenStackParamList = {
     Login: undefined
     Register: undefined
     Main: undefined
+    Info: undefined
 }
 
 const Stack = createNativeStackNavigator<ScreenStackParamList>()
@@ -77,6 +79,7 @@ const StackNavigator = () => {
           <Stack.Screen name='Login' component={Login}  options={{ headerShown : false }} />
           <Stack.Screen name='Register' component={Register} options={{ headerShown : false }} />
           <Stack.Screen name="Main" component={BottomTabs} options={{ headerShown : false }} />
+          <Stack.Screen name="Info" component={ProductInfo} options={{ headerShown : false }} />
       </Stack.Navigator>
     </NavigationContainer>
   )

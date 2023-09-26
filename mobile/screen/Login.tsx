@@ -13,7 +13,7 @@ import {
   View,
 } from "react-native";
 import api from "../helpers/axios";
-import { loginProps } from "./types";
+import { loginProps } from "../types/types";
 
 const LoginScreen = () => {
   const navigation = useNavigation();
