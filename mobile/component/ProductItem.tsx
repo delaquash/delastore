@@ -1,24 +1,29 @@
 import { Pressable, StyleSheet, Text, View, Image } from 'react-native'
 import React from 'react'
-
+interface product {
+  image: string;
+  title: string;
+  price: string;
+  rating: any;
+}
 // image, title, price, rating,
 
-const ProductItem = ({ product }) => {
+const ProductItem: React.FC<product> = ({ image, title, price, rating }) => {
   return (
     <Pressable style={styles.product}>
         <Image 
-          source={{ uri: product.image}}
+          source={{ uri: image}}
           style={styles.img}
         />
         <Text numberOfLines={1} style={styles.productTitle}>
-        {product?.title}
+        {title}
       </Text>
       <View
         style={styles.productView}
       >
-        <Text style={styles.view}>{product?.price}</Text>
+        <Text style={styles.view}>{price}</Text>
         <Text style={styles.rating}>
-          {product?.rating?.rate} ratings
+          {rating?.rate} ratings
         </Text>
       </View>
       <Pressable

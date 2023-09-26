@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, ScrollView,SafeAreaView, Platform, Pressable, TextInput, Image } from 'react-native';
-import { AntDesign, Feather, Ionicons, Entypo, MaterialIcons } from "@expo/vector-icons";
-import { deals, images, list, offers } from '../data';
-import   ImageSliderBox, {SliderBox}   from "react-native-image-slider-box";
+import { AntDesign, Feather, Ionicons, MaterialIcons } from "@expo/vector-icons";
 import axios from "axios";
+import React, { useCallback, useEffect, useState } from 'react';
+import { Image, Platform, Pressable, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { SliderBox } from "react-native-image-slider-box";
 import ProductItem from "../component/ProductItem";
-import DropDownPicker from "react-native-dropdown-picker";
+import { deals, images, list, offers } from '../data';
 import { ItemProps } from '../types/types';
 // import { useNavigation } from "@react-navigation/native";
 // import { useSelector } from "react-redux";
@@ -36,6 +35,10 @@ const Home = () => {
     }
     fetchData()
   }, [])
+
+  const onGenderOpen = useCallback(() => {
+    setOpen(false);
+  }, []);
   
   return (
     <SafeAreaView style={styles.safeAreaView}>
@@ -109,8 +112,9 @@ const Home = () => {
           <Text style={styles.borderlineText} />
           <View style={styles.dropDownView}>
             
-           <DropDownPicker  
-              open={open}
+           {/* <DropDownPicker  
+              style={styles.dropdownPicker}
+              // open={open}
               value={category} //genderValue
               items={items}
               setOpen={setOpen}
@@ -118,16 +122,23 @@ const Home = () => {
               setItems={setItems}
               placeholder="choose category"
               // placeholderStyle={styles.placeholderStyles}
-              // onOpen={onGenderOpen}
+              onOpen={onGenderOpen}
               // onChangeValue={onChange}
               zIndex={3000}
               zIndexInverse={1000}
-              /> 
+              
+              />  */}
+              
            </View>
 
           <View style={styles.productView}>
               {products.map((product, index)=> (
-                <ProductItem product={product} key={index} />
+                <ProductItem 
+                  key={index}
+                  image={product.image} 
+                  title={product.title} 
+                  price={product.price}
+                  rating={product.rating}                  />
               ))}
           </View>
       </ScrollView>
