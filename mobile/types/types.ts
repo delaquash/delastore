@@ -30,3 +30,12 @@ export type loginProps = {
       count: number;
     };
   }
+
+  export interface RouteParams {
+    key: string; 
+    name: string; 
+    path?: string | undefined;
+    params: {
+      carouselImages?: any
+    }
+  }

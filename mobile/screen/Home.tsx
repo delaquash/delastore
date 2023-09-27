@@ -6,7 +6,6 @@ import {
 } from "@expo/vector-icons";
 import axios from "axios";
 import React, { useCallback, useEffect, useState } from "react";
-// import { ScrollView } from 'react-native-virtualized-view'
 import {
   Image,
   Platform,
@@ -23,6 +22,7 @@ import { SliderBox } from "react-native-image-slider-box";
 import ProductItem from "../component/ProductItem";
 import { deals, images, list, offers } from "../data";
 import { ItemProps, Product } from "../types/types";
+import { useNavigation } from "@react-navigation/native";
 // import { useNavigation } from "@react-navigation/native";
 // import { useSelector } from "react-redux";
 // import { BottomModal, SlideAnimation, ModalContent } from "react-native-modals";
@@ -32,6 +32,7 @@ import { ItemProps, Product } from "../types/types";
 
 const Home = () => {
   const [open, setOpen] = useState(false);
+  const navigation = useNavigation()
   const [products, setProducts] = useState<Product[]>([]);
   const [category, setCategory] = useState<string>("jewelry");
   const [items, setItems] = useState<ItemProps[]>([
@@ -112,7 +113,20 @@ const Home = () => {
         <Text style={styles.todayDeals}>Today's Deals</Text>
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
           {offers.map((item, index) => (
-            <Pressable key={index} style={styles.pressableOffers}>
+            <Pressable
+              onPress={()=> navigation.navigate("Info", {
+              id: item.id,
+              title: item.title,
+              price: item.price,
+              carouselImage: item.carouselImages,
+              color: item.color,
+              size: item.size,
+              oldPrice: item.oldPrice,
+              item: item
+            })} 
+              key={index} 
+              style={styles.pressableOffers}
+            >
               <Image
                 source={{ uri: item.image }}
                 style={{ width: 150, height: 150, resizeMode: "contain" }}

@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavigationContainer, useNavigation } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { createNativeStackNavigator, NativeStackScreenProps } from "@react-navigation/native-stack";
 import Login from '../screen/Login';
 import Register from '../screen/Register';
 import Home from '../screen/Home';
@@ -9,14 +9,18 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Cart from '../screen/Cart';
 import Profile from '../screen/Profile';
 import ProductInfo from '../screen/ProductInfo';
+import { createStackNavigator } from '@react-navigation/stack';
 
 
 export type ScreenStackParamList = {
     Login: undefined
     Register: undefined
     Main: undefined
-    Info: undefined
+    Info: { carouselImage: string[], titles: string, prices: number}
 }
+
+// type Props = NativeStackScreenProps<ScreenStackParamList, 'Info'>;
+// const Stack = createStackNavigator<ScreenStackParamList>();
 
 const Stack = createNativeStackNavigator<ScreenStackParamList>()
 const Tab = createBottomTabNavigator()
@@ -72,17 +76,33 @@ const StackNavigator = () => {
   }
   return (
     <NavigationContainer>
-      <Stack.Navigator 
+      <Stack.Navigator
       // initialRouteName="Home"
-      > 
-          
-          <Stack.Screen name='Login' component={Login}  options={{ headerShown : false }} />
-          <Stack.Screen name='Register' component={Register} options={{ headerShown : false }} />
-          <Stack.Screen name="Main" component={BottomTabs} options={{ headerShown : false }} />
-          <Stack.Screen name="Info" component={ProductInfo} options={{ headerShown : false }} />
+      >
+        <Stack.Screen
+          name="Login"
+          component={Login}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Register"
+          component={Register}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Main"
+          component={BottomTabs}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Info"
+          component={ProductInfo}
+          options={{ headerShown: false }}
+          initialParams={{}}
+        />
       </Stack.Navigator>
     </NavigationContainer>
-  )
+  );
 }
 
 export default StackNavigator;
