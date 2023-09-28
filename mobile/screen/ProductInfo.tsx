@@ -1,31 +1,42 @@
-import { AntDesign, Feather, MaterialCommunityIcons, Ionicons } from "@expo/vector-icons";
+import {
+  AntDesign,
+  Feather,
+  Ionicons,
+  MaterialCommunityIcons,
+} from "@expo/vector-icons";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import React, { useState } from "react";
 import {
-    Dimensions,
-    ImageBackground,
-    Pressable,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TextInput,
-    View,
+  Dimensions,
+  ImageBackground,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
 } from "react-native";
 
 const ProductInfo = () => {
-  const route: RouteProp<{ params: {
-     carouselImages: string[],
-      title: string; 
-      price: number;
-      color: string;
-      size: string;
-    }}, 'params'> = useRoute();
+  const route: RouteProp<
+    {
+      params: {
+        carouselImages: string[];
+        title: string;
+        price: number;
+        color: string;
+        size: string;
+      };
+    },
+    "params"
+  > = useRoute();
   const { width } = Dimensions.get("window");
   const navigation = useNavigation();
   const [addedToCart, setAddedToCart] = useState(false);
   const height = (width * 100) / 100;
   return (
-    <ScrollView style={styles.scrollViewContainer}
+    <ScrollView
+      style={styles.scrollViewContainer}
       showsVerticalScrollIndicator={false}
     >
       <View style={styles.scrollViewPress}>
@@ -73,7 +84,7 @@ const ProductInfo = () => {
         </Text>
 
         <Text style={{ fontSize: 18, fontWeight: "600", marginTop: 6 }}>
-          ₹{route?.params?.price}
+          ₦{route?.params?.price}
         </Text>
       </View>
       <Text style={{ height: 1, borderColor: "#D0D0D0", borderWidth: 1 }} />
@@ -96,7 +107,7 @@ const ProductInfo = () => {
 
       <View style={{ padding: 10 }}>
         <Text style={{ fontSize: 15, fontWeight: "bold", marginVertical: 5 }}>
-          Total : ₹{route.params.price}
+          Total : ₦{route.params.price}
         </Text>
         <Text style={{ color: "#00CED1" }}>
           FREE delivery Tomorrow by 3 PM.Order within 10hrs 30 mins
@@ -155,7 +166,7 @@ const ProductInfo = () => {
         }}
       >
         <Text>Buy Now</Text>
-        </Pressable> 
+      </Pressable>
     </ScrollView>
   );
 };
