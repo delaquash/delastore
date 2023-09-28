@@ -1,20 +1,20 @@
 import {
-  AntDesign,
-  Feather,
-  Ionicons,
-  MaterialCommunityIcons,
+    AntDesign,
+    Feather,
+    Ionicons,
+    MaterialCommunityIcons,
 } from "@expo/vector-icons";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import React, { useState } from "react";
 import {
-  Dimensions,
-  ImageBackground,
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
+    Dimensions,
+    ImageBackground,
+    Pressable,
+    ScrollView,
+    StyleSheet,
+    Text,
+    TextInput,
+    View,
 } from "react-native";
 
 const ProductInfo = () => {
@@ -47,7 +47,7 @@ const ProductInfo = () => {
             size={22}
             color="black"
           />
-          <TextInput placeholder="Search Amazon.in" />
+          <TextInput placeholder="Search..." />
         </Pressable>
 
         <Feather name="mic" size={24} color="black" />
@@ -58,7 +58,7 @@ const ProductInfo = () => {
             style={{ width, height, marginTop: 25 }}
             source={{ uri: item }}
             key={index}
-            resizeMode="contain"
+            resizeMode="cover"
           >
             <View style={styles.styleView}>
               <View style={styles.bonusView}>
@@ -113,37 +113,20 @@ const ProductInfo = () => {
           FREE delivery Tomorrow by 3 PM.Order within 10hrs 30 mins
         </Text>
 
-        <View
-          style={{
-            flexDirection: "row",
-            marginVertical: 5,
-            alignItems: "center",
-            gap: 5,
-          }}
-        >
+        <View style={styles.ioniconView}>
           <Ionicons name="location" size={24} color="black" />
 
           <Text style={{ fontSize: 15, fontWeight: "500" }}>
-            Deliver To Sujan - Bangalore 560019
+            Deliver To 42, Ayonnuga Street, Ikoyi Boulevard
           </Text>
         </View>
       </View>
 
-      <Text style={{ color: "green", marginHorizontal: 10, fontWeight: "500" }}>
-        IN Stock
-      </Text>
+      <Text style={styles.stockText}>IN Stock</Text>
 
       <Pressable
         // onPress={() => addItemToCart(route?.params?.item)}
-        style={{
-          backgroundColor: "#FFC72C",
-          padding: 10,
-          borderRadius: 20,
-          justifyContent: "center",
-          alignItems: "center",
-          marginHorizontal: 10,
-          marginVertical: 10,
-        }}
+        style={styles.cart}
       >
         {addedToCart ? (
           <View>
@@ -155,15 +138,7 @@ const ProductInfo = () => {
       </Pressable>
 
       <Pressable
-        style={{
-          backgroundColor: "#FFAC1C",
-          padding: 10,
-          borderRadius: 20,
-          justifyContent: "center",
-          alignItems: "center",
-          marginHorizontal: 10,
-          marginVertical: 10,
-        }}
+        style={styles.cart}
       >
         <Text>Buy Now</Text>
       </Pressable>
@@ -236,5 +211,25 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     flexDirection: "row",
+  },
+  ioniconView: {
+    flexDirection: "row",
+    marginVertical: 5,
+    alignItems: "center",
+    gap: 5,
+  },
+  stockText: {
+    color: "green",
+    marginHorizontal: 10,
+    fontWeight: "500",
+  },
+  cart: {
+    backgroundColor: "#FFC72C",
+    padding: 10,
+    borderRadius: 20,
+    justifyContent: "center",
+    alignItems: "center",
+    marginHorizontal: 10,
+    marginVertical: 10,
   },
 });

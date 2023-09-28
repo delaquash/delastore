@@ -23,7 +23,6 @@ import ProductItem from "../component/ProductItem";
 import { deals, images, list, offers } from "../data";
 import { ItemProps, Product } from "../types/types";
 import { useNavigation } from "@react-navigation/native";
-// import { useNavigation } from "@react-navigation/native";
 // import { useSelector } from "react-redux";
 // import { BottomModal, SlideAnimation, ModalContent } from "react-native-modals";
 // import AsyncStorage from "@react-native-async-storage/async-storage";
