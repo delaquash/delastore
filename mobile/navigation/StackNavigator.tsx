@@ -1,34 +1,108 @@
 import React from 'react';
-import { View, Text } from 'react-native';
-import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack"
-import LoginScreen from '../screen/LoginScreen';
-import RegisterScreen from '../screen/RegisterScreen';
+import { NavigationContainer, useNavigation } from "@react-navigation/native";
+import { createNativeStackNavigator, NativeStackScreenProps } from "@react-navigation/native-stack";
+import Login from '../screen/Login';
+import Register from '../screen/Register';
+import Home from '../screen/Home';
+import { Entypo , AntDesign, Ionicons } from "@expo/vector-icons";
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import Cart from '../screen/Cart';
+import Profile from '../screen/Profile';
+import ProductInfo from '../screen/ProductInfo';
+import { createStackNavigator } from '@react-navigation/stack';
+
 
 export type ScreenStackParamList = {
     Login: undefined
     Register: undefined
-
+    Main: undefined
+    Info: { carouselImage: string[], titles: string, prices: number}
 }
+
+// type Props = NativeStackScreenProps<ScreenStackParamList, 'Info'>;
+// const Stack = createStackNavigator<ScreenStackParamList>();
+
 const Stack = createNativeStackNavigator<ScreenStackParamList>()
+const Tab = createBottomTabNavigator()
 
 const StackNavigator = () => {
+  const BottomTabs =()=> {
+    return (
+      <Tab.Navigator>
+        <Tab.Screen 
+            name='Home'
+            component={Home}
+            options={{
+              tabBarLabel: "Home",
+              tabBarLabelStyle: { color: "#008E97"},
+              headerShown: false,
+              tabBarIcon: ({ focused })=> focused ? (
+                <Entypo name='home' size={24} color="black" />
+              ) : (
+                <AntDesign name='home' size={24} color="black" />
+              )
+            }}
+        />
+        <Tab.Screen 
+            name='Profile'
+            component={Profile}
+            options={{
+              tabBarLabel: "Profile",
+              tabBarLabelStyle: { color: "#008E97"},
+              headerShown: false,
+              tabBarIcon: ({ focused })=> focused ? (
+                <Ionicons name="person" size={24} color="#008E97" />
+              ) : (
+                <Ionicons name="person-outline" size={24} color="black" />
+              )
+            }}
+        />
+        <Tab.Screen 
+            name='Cart'
+            component={Cart}
+            options={{
+              tabBarLabel: "Cart",
+              tabBarLabelStyle: { color: "#008E97"},
+              headerShown: false,
+              tabBarIcon: ({ focused })=> focused ? (
+                <AntDesign name="shoppingcart" size={24} color="#008E97" />
+              ) : (
+                <AntDesign name="shoppingcart" size={24} color="black" />
+              )
+            }}
+        />
+      </Tab.Navigator>
+    )
+  }
   return (
     <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen 
-            component={LoginScreen} 
-            name='Login'
-            options={{ headerShown : false }}
+      <Stack.Navigator
+      // initialRouteName="Home"
+      >
+        <Stack.Screen
+          name="Login"
+          component={Login}
+          options={{ headerShown: false }}
         />
-        <Stack.Screen 
-            component={RegisterScreen} 
-            name='Register'
-            options={{ headerShown : false }}
+        <Stack.Screen
+          name="Register"
+          component={Register}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Main"
+          component={BottomTabs}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Info"
+          component={ProductInfo}
+          options={{ headerShown: false }}
+          initialParams={{}}
         />
       </Stack.Navigator>
     </NavigationContainer>
-  )
+  );
 }
 
-export default StackNavigator
+export default StackNavigator;
