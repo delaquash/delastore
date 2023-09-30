@@ -74,7 +74,7 @@ const Register = () => {
               value={name}
               onChangeText={(text) => setName(text)}
               style={styles.textInput}
-              placeholder="enter your name"
+              placeholder="Enter your name"
             />
           </View>
           </View>
@@ -93,7 +93,7 @@ const Register = () => {
               value={email}
               onChangeText={(text) => setEmail(text)}
               style={styles.emailBox}
-              placeholder="enter your Email"
+              placeholder="Enter your Email"
             />
           </View>
 
@@ -113,7 +113,7 @@ const Register = () => {
               onChangeText={(text) => setPassword(text)}
               secureTextEntry={true}
               style={styles.passwordInput}
-              placeholder="enter your Password"
+              placeholder="Enter your Password"
             />
           </View>
         </View>
