@@ -28,8 +28,13 @@ export const CartSlice = createSlice({
             }  else {
                 state.cart.push({ ...action.payload, quantity: 1})
             }
-        } 
-         
+        },
+        removeFromCart: (state, action: PayloadAction<CartProps>)=> {
+            const { id } = action.payload
+            const removeItem = state.cart.filter((item)=> item.id !== action.payload.id)
+            state.cart = removeItem
+        },
+        
     }
 })
 
