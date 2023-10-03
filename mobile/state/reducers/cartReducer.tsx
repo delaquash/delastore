@@ -2,16 +2,18 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 
 export interface CartProps {
-    id: string;
-    cart: [] 
+    id: number;
+    name: string;
+    price: number;
+    quantity: number; 
 }
 
+interface CartState {
+    cart: CartProps[];
+  }
 
-// cart: 
-
-const initialState: CartProps = {
-    cart: [],
-    id: ""
+const initialState: CartState = {
+    cart: []
 }
 
 export const CartSlice = createSlice({
@@ -19,7 +21,8 @@ export const CartSlice = createSlice({
     initialState,
     reducers: {
         addToCart: (state, action: PayloadAction<CartProps>)=> {
-            const presentItem: any = state.cart.find((item: { id: string; })=> item.id === action.payload.id)
+            const { id, name, quantity, price } = action.payload
+            const presentItem = state.cart.find((item)=> item.id === action.payload.id)
             if(presentItem){
                 presentItem.quantity++
             }  else {
