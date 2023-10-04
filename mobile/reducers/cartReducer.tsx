@@ -70,6 +70,12 @@ export const CartSlice = createSlice({
   },
 });
 
-export const { addToCart, cleanCart,reduceQuantity, incrementQuantity, removeFromCart } = CartSlice.actions;
-export const userSelector = (state: RootState) => state.userReducer;
+export const {
+  addToCart,
+  cleanCart,
+  reduceQuantity,
+  incrementQuantity,
+  removeFromCart,
+} = CartSlice.actions;
+export const userSelector = (state: RootState) => state.cart;
 export default CartSlice.reducer;

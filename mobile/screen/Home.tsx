@@ -23,7 +23,8 @@ import ProductItem from "../component/ProductItem";
 import { deals, images, list, offers } from "../data";
 import { ItemProps, Product } from "../types/types";
 import { useNavigation } from "@react-navigation/native";
-// import { useSelector } from "react-redux";
+import { useSelector } from "react-redux";
+import { RootState } from "store";
 // import { BottomModal, SlideAnimation, ModalContent } from "react-native-modals";
 // import AsyncStorage from "@react-native-async-storage/async-storage";
 // import { UserType } from "../UserContext";
@@ -31,7 +32,9 @@ import { useNavigation } from "@react-navigation/native";
 
 const Home = () => {
   const [open, setOpen] = useState(false);
-  const navigation = useNavigation()
+  const navigation = useNavigation();
+  const cart = useSelector((state:RootState)=> state.cart.cart);
+  console.log(cart);
   const [products, setProducts] = useState<Product[]>([]);
   const [category, setCategory] = useState<string>("jewelry");
   const [items, setItems] = useState<ItemProps[]>([
