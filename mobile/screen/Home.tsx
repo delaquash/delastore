@@ -36,7 +36,7 @@ const Home = () => {
   const cart = useSelector((state:RootState)=> state.cart.cart);
   console.log(cart);
   const [products, setProducts] = useState<Product[]>([]);
-  const [category, setCategory] = useState<string>("jewelry");
+  const [category, setCategory] = useState<string>("jewelery");
   const [items, setItems] = useState<ItemProps[]>([
     { label: "Men's clothing", value: "men's clothing" },
     { label: "jewelery", value: "jewelery" },
@@ -59,7 +59,7 @@ const Home = () => {
   }, []);
 
   const onGenderOpen = useCallback(() => {
-    setOpen(!open);
+    setCompanyOpen(false);
   }, []);
 
   return (
@@ -140,8 +140,7 @@ const Home = () => {
           ))}
         </ScrollView>
         <Text style={styles.borderlineText} />
-        <View
-          style={{
+        <View  style={{
             marginHorizontal: 10,
             marginTop: 20,
             width: "45%",
@@ -188,6 +187,16 @@ const Home = () => {
 };
 
 export default Home;
+
+// Searching array
+// const linearSearch = (array, value)=> {
+//   for (let i=0; i < array.length; i++){
+//     if(array [i]=== value) return i 
+//   }
+//       return -1
+// }
+
+// linearSearch([4, 8, 5, 7, 6, 0, 9], 0)
 
 const styles = StyleSheet.create({
   safeAreaView: {
