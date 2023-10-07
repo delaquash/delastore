@@ -30,7 +30,7 @@ const ProductInfo = () => {
         price: number;
         color: string;
         size: string;
-        item: string
+        item: string | CartProps
       };
     },
     "params"
@@ -42,9 +42,9 @@ const ProductInfo = () => {
   const [addedToCart, setAddedToCart] = useState(false);
   const height = (width * 100) / 100;
   const dispatch = useDispatch();
-  const addItemToCart=(item:  CartProps) => {
+  const addItemToCart=(item: string | CartProps) => {
     setAddedToCart(false)
-    dispatch(addToCart(item))
+    dispatch(addToCart(item):  string)
     setTimeout(()=> {
       setAddedToCart(true)} ,2500 )    
   }
