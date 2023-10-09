@@ -1,9 +1,9 @@
-export { };
-  import bodyParser from "body-parser";
-  import express, { Request, Response, NextFunction } from "express";
+export {};
+import bodyParser from "body-parser";
+import express, { NextFunction, Request, Response } from "express";
 // import mongoose from "mongoose";
 import cors from "cors";
-import dotenv from 'dotenv';
+import dotenv from "dotenv";
 import connectDB from "./config/db";
 dotenv.config();
 
@@ -15,31 +15,34 @@ app.use(cors());
 
 app.use(bodyParser.json());
 
-app.use((req: Request, res: Response, next: NextFunction)=>{
-    res.setHeader("Access-Control-Allow-Origin", "*")
-    res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, PATCH, DELETE")
-    res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization, Preload")
-    next();
-}) 
-
-
+app.use((req: Request, res: Response, next: NextFunction) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET, POST, PUT, PATCH, DELETE"
+  );
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "Content-Type, Authorization, Preload"
+  );
+  next();
+});
 
 app.get("/", (req: Request, res: Response) => {
   res.send("API IS RUNNING...");
 });
 
-
-app.use("/", registerRoute)
+app.use("/", registerRoute);
 
 // error
-app.use((error:any, req: Request, res: Response, next: NextFunction)=> {
+app.use((error: any, req: Request, res: Response, next: NextFunction) => {
   const status = error.status || 500;
-  const message = error.message || "Something went wrong"
-  return res.status(status).json({message})
-})
+  const message = error.message || "Something went wrong";
+  return res.status(status).json({ message });
+});
 
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
-    console.log(`Server running on mode on port ${PORT}`);
-  });
+  console.log(`Server running on mode on port ${PORT}`);
+});

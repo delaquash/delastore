@@ -21,15 +21,24 @@ export const CartSlice = createSlice({
   initialState,
   reducers: {
     addToCart: (state, action: PayloadAction<CartProps>) => {
-      const { id, name, quantity, price } = action.payload;
-      const presentItem = state.cart.find(
-        (item) => item.id === action.payload.id
-      );
-      if (presentItem) {
-        presentItem.quantity++;
-      } else {
-        state.cart.push({ ...action.payload, quantity: 1 });
-      }
+      const presentItem = state.cart.find((item) => item?.id === action?.payload?.id)
+        if(presentItem){
+          state.cart = state.cart.map((cartItem)=> 
+            cartItem.id === action.payload.id ? 
+              { ...cartItem, quantity: cartItem.quantity + 1}
+            : cartItem
+          )
+        } else {
+          state.cart = [...state.cart, {...action.payload, quantity: 1}]
+        }
+      
+
+
+      // if (presentItem) {
+      //   presentItem.quantity++;
+      // } else {
+      //   state.cart.push({ ...action.payload, quantity: 1 });
+      // }
     },
     removeFromCart: (state, action: PayloadAction<CartProps>) => {
       const { id } = action.payload;

@@ -42,11 +42,12 @@ const ProductInfo = () => {
   const [addedToCart, setAddedToCart] = useState(false);
   const height = (width * 100) / 100;
   const dispatch = useDispatch();
-  const addItemToCart=(item: string | CartProps) => {
+  const addItemToCart=(item: any) => {
     setAddedToCart(false)
-    dispatch(addToCart(item):  string)
+    dispatch(addToCart(item))
     setTimeout(()=> {
-      setAddedToCart(true)} ,2500 )    
+      setAddedToCart(true)
+    },2500 )    
   }
   return (
     <ScrollView
