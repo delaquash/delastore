@@ -106,7 +106,22 @@ const Home = () => {
         <Text style={styles.trendDeals}>Trending Deals of the week</Text>
         <View style={styles.dealsView}>
           {deals.map((deal, index) => (
-            <Pressable key={index} style={styles.dealPressable}>
+            <Pressable 
+              onPress={()=> navigation.navigate("Info", {
+                id: deal.id,
+                title: deal.title,
+                image: deal.image,
+                price: deal.price,
+                color: deal.color,
+                size: deal.size,
+                carouselImage: deal.carouselImages,
+                oldPrice: deal.oldPrice,
+                item: deal
+              })}
+              key={index} 
+              style={styles.dealPressable}
+
+            >
               <Image source={{ uri: deal.image }} style={styles.dealsImage} />
             </Pressable>
           ))}
@@ -116,18 +131,18 @@ const Home = () => {
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
           {offers.map((item, index) => (
             <Pressable
-              onPress={()=> navigation.navigate("Info", {
-              id: item.id,
-              title: item.title,
-              price: item.price,
-              carouselImage: item.carouselImages,
-              color: item.color,
-              size: item.size,
-              oldPrice: item.oldPrice,
-              item: item
-            })} 
-              key={index} 
-              style={styles.pressableOffers}
+                onPress={()=> navigation.navigate("Info", {
+                id: item.id,
+                title: item.title,
+                price: item.price,
+                carouselImage: item.carouselImages,
+                color: item.color,
+                size: item.size,
+                oldPrice: item.oldPrice,
+                item: item
+              })} 
+                key={index} 
+                style={styles.pressableOffers}
             >
               <Image
                 source={{ uri: item.image }}
@@ -187,16 +202,6 @@ const Home = () => {
 };
 
 export default Home;
-
-// Searching array
-// const linearSearch = (array, value)=> {
-//   for (let i=0; i < array.length; i++){
-//     if(array [i]=== value) return i 
-//   }
-//       return -1
-// }
-
-// linearSearch([4, 8, 5, 7, 6, 0, 9], 0)
 
 const styles = StyleSheet.create({
   safeAreaView: {

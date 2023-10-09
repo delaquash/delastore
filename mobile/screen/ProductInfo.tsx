@@ -17,7 +17,7 @@ import {
     View,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-import { CartProps, addToCart } from "reducers/cartReducer";
+import { CartProps, addToCart } from "../reducers/cartReducer";
 import { RootState } from "store";
 
 const ProductInfo = () => {
@@ -42,13 +42,16 @@ const ProductInfo = () => {
   const [addedToCart, setAddedToCart] = useState(false);
   const height = (width * 100) / 100;
   const dispatch = useDispatch();
-  const addItemToCart=(item: any) => {
+
+
+  const addItemToCart=(item) => {
     setAddedToCart(false)
     dispatch(addToCart(item))
     setTimeout(()=> {
       setAddedToCart(true)
     },2500 )    
   }
+
   return (
     <ScrollView
       style={styles.scrollViewContainer}
