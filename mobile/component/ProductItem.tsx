@@ -1,12 +1,24 @@
 import { Pressable, StyleSheet, Text, View, Image } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import { product } from '../types/types'
-
-
+import { useDispatch } from 'react-redux';
+import { addToCart } from 'reducers/cartReducer';
 
 const ProductItem: React.FC<product> = ({ image, title, price, rating }) => {
+  const dispatch = useDispatch();
+  const [addedToCart, setAddedToCart] = useState(false);
+  const addItemToCart=(item) => {
+    setAddedToCart(false)
+    dispatch(addToCart(item))
+    setTimeout(()=> {
+      setAddedToCart(true)
+    },2500 )    
+  }
+
   return (
-    <Pressable style={styles.product}>
+    <Pressable 
+      style={styles.product}
+      >
         <Image 
           source={{ uri: image}}
           style={styles.img}
@@ -23,7 +35,7 @@ const ProductItem: React.FC<product> = ({ image, title, price, rating }) => {
         </Text>
       </View>
       <Pressable
-        // onPress={() => addItemToCart(item)}
+        onPress={() => addItemToCart(item)}
         style={styles.cartItem}
       >
         {/* {addedToCart ? ( */}
