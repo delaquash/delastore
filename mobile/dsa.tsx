@@ -40,17 +40,17 @@
 // })
 
 
-const bubbleSort =(arr: number[]): []=> {
-    for (let i = arr.length; i > 0; i--) {
-        for(let j = 0; j < i -1; i++){
-            if(arr[j] > arr[i]){
-                // swap elements in the array
-                var temp = arr[i]
-                arr[j] = arr[i]
-            }
+// const bubbleSort =(arr: number[]): []=> {
+//     for (let i = arr.length; i > 0; i--) {
+//         for(let j = 0; j < i -1; i++){
+//             if(arr[j] > arr[i]){
+//                 // swap elements in the array
+//                 var temp = arr[i]
+//                 arr[j] = arr[i]
+//             }
             
             
 
-        }
-    }
-}
+//         }
+//         return arr
+//     }}

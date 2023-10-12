@@ -44,12 +44,12 @@ const ProductInfo = () => {
   const dispatch = useDispatch();
 
 
-  const addItemToCart=(item) => {
+  const addItemToCart=(item:  CartProps) => {
     setAddedToCart(false)
     dispatch(addToCart(item))
     setTimeout(()=> {
       setAddedToCart(true)
-    },2500 )    
+    },2500)    
   }
 
   return (

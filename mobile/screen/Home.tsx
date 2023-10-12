@@ -4,6 +4,7 @@ import {
   Ionicons,
   MaterialIcons,
 } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import React, { useCallback, useEffect, useState } from "react";
 import {
@@ -19,19 +20,20 @@ import {
 } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 import { SliderBox } from "react-native-image-slider-box";
+import { BottomModal, SlideAnimation, ModalContent } from "react-native-modals";
+import { useSelector } from "react-redux";
+import { RootState } from "store";
 import ProductItem from "../component/ProductItem";
 import { deals, images, list, offers } from "../data";
 import { ItemProps, Product } from "../types/types";
-import { useNavigation } from "@react-navigation/native";
-import { useSelector } from "react-redux";
-import { RootState } from "store";
-// import { BottomModal, SlideAnimation, ModalContent } from "react-native-modals";
+
 // import AsyncStorage from "@react-native-async-storage/async-storage";
 // import { UserType } from "../UserContext";
 // import jwt_decode from "jwt-decode";
 
 const Home = () => {
   const [open, setOpen] = useState(false);
+  const [visibleModal, setVisibleModal] = useState(false)
   const navigation = useNavigation();
   const cart = useSelector((state:RootState)=> state.cart.cart);
   console.log(cart);
@@ -59,10 +61,16 @@ const Home = () => {
   }, []);
 
   const onGenderOpen = useCallback(() => {
-    setCompanyOpen(false);
+    setOpen(!open);
   }, []);
 
+
+  const confirmation =() => {
+    console.log("Pressed")
+  }
+
   return (
+    <>
     <SafeAreaView style={styles.safeAreaView}>
       <ScrollView>
         <View style={styles.viewStyle}>
@@ -198,6 +206,27 @@ const Home = () => {
         </View>
       </ScrollView>
     </SafeAreaView>
+    <BottomModal
+      visible={visibleModal}
+      onHardwareBackPress={()=> setVisibleModal(!visibleModal)}
+      onBackdropPress={()=> setVisibleModal(!visibleModal)}
+      onTouchOutside={()=> setVisibleModal(!visibleModal)}
+      swipeDirection={["up", "down"]}
+      swipeThreshold={200}
+      modalAnimation={
+        new SlideAnimation({
+          slideFrom: "bottom"
+        })
+      }
+    >
+      <ModalContent style={{ width: "100%", height: 400 }}>
+        <View>
+          <Text>Choose your location...</Text>
+        </View>
+      </ModalContent>
+        
+    </BottomModal>
+    </>
   );
 };
 
