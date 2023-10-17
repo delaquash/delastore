@@ -23,16 +23,16 @@
 
 
 
-function insertSort(arr:[]){
-    for (var i = 1, i < arr.length; i++){
-        var currentVal = arr[i];
-        /* The line `for(var j= i-1;  j >= 0 && arr[j] > currentVal; j--)` is a nested `for` loop that
-        iterates over the array `arr` from index `i-1` to 0. */
-        for(var j= i-1;  j >= 0 && arr[j] > currentVal; j--){
+// function insertSort(arr:[]){
+//     for (var i = 1, i < arr.length; i++){
+//         var currentVal = arr[i];
+//         /* The line `for(var j= i-1;  j >= 0 && arr[j] > currentVal; j--)` is a nested `for` loop that
+//         iterates over the array `arr` from index `i-1` to 0. */
+//         for(var j= i-1;  j >= 0 && arr[j] > currentVal; j--){
 
-        }
-    }
-    return arr;
-}
+//         }
+//     }
+//     return arr;
+// }
 
-insertSort([2, 1, 9, 4, 46, 55])
+// insertSort([2, 1, 9, 4, 46, 55])

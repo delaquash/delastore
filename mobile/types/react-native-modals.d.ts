@@ -31,13 +31,13 @@ declare module 'react-native-modals' {
 
   export class ModalContent extends React.Component<ModalContentProps> {}
 
-  // export class ModalPortal {
-  //   static openModal(content: React.ReactElement, options?: {
-  //     animationDuration?: number;
-  //     onAnimateOutFinish?: () => void;
-  //   }): void;
-  //   static closeModal(): void;
-  // }
+  export class ModalPortal {
+    static openModal(content: React.ReactElement, options?: {
+      animationDuration?: number;
+      onAnimateOutFinish?: () => void;
+    }): void;
+    static closeModal(): void;
+  }
 
   export default BottomModal;
 }

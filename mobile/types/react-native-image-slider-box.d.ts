@@ -30,5 +30,5 @@ declare module "react-native-image-slider-box" {
     
   }
 
-  export default class ImageSliderBox extends React.Component<ImageSliderBoxProps> {}
+  export default class SliderBox extends React.Component<ImageSliderBoxProps> {}
 }

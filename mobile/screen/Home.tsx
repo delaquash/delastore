@@ -4,9 +4,14 @@ import {
   Ionicons,
   MaterialIcons,
 } from "@expo/vector-icons";
+import React, { useCallback, useMemo, useRef, useEffect, useState } from 'react';
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
-import React, { useCallback, useEffect, useState } from "react";
+import {
+  BottomSheetModal,
+  BottomSheetModalProvider,
+} from '@gorhom/bottom-sheet';
+
 import {
   Image,
   Platform,
@@ -19,24 +24,23 @@ import {
   View,
 } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
-import { SliderBox } from "react-native-image-slider-box";
-import { BottomModal, SlideAnimation, ModalContent } from "react-native-modals";
+import { SliderBox }  from "react-native-image-slider-box";
 import { useSelector } from "react-redux";
-import { RootState } from "store";
+import { RootState } from "../store";
 import ProductItem from "../component/ProductItem";
 import { deals, images, list, offers } from "../data";
 import { ItemProps, Product } from "../types/types";
-
+import BottomModalComponent from "../component/BottomModal";
 // import AsyncStorage from "@react-native-async-storage/async-storage";
 // import { UserType } from "../UserContext";
 // import jwt_decode from "jwt-decode";
 
 const Home = () => {
-  const [open, setOpen] = useState(false);
-  const [visibleModal, setVisibleModal] = useState(false)
   const navigation = useNavigation();
   const cart = useSelector((state:RootState)=> state.cart.cart);
-  console.log(cart);
+  const [open, setOpen] = useState(false);
+  const [visibleModal, setVisibleModal] = useState(false)
+  // console.log(cart);
   const [products, setProducts] = useState<Product[]>([]);
   const [category, setCategory] = useState<string>("jewelery");
   const [items, setItems] = useState<ItemProps[]>([
@@ -47,6 +51,16 @@ const Home = () => {
   ]);
 
 // 09040547464
+
+const bottomSheetModalRef = useRef<BottomSheetModal>(null);
+  // variables
+  const snapPoints = useMemo(() => ['25%', '50%'], []);
+  const handlePresentModalPress = useCallback(() => {
+    bottomSheetModalRef.current?.present();
+  }, []);
+  const handleSheetChanges = useCallback((index: number) => {
+    console.log('handleSheetChanges', index);
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -65,8 +79,9 @@ const Home = () => {
   }, []);
 
 
-  const confirmation =() => {
+  const modalKey =() => {
     console.log("Pressed")
+    setVisibleModal(!visibleModal)
   }
 
   return (
@@ -85,7 +100,9 @@ const Home = () => {
           </Pressable>
           <Feather name="mic" size={24} color="black" />
         </View>
-        <Pressable style={styles.pressableLocation}>
+        <Pressable 
+          onPress={modalKey}
+          style={styles.pressableLocation}>
           <Ionicons name="location-outline" size={24} color="black" />
           <Pressable>
             <Text style={styles.address}>
@@ -206,26 +223,18 @@ const Home = () => {
         </View>
       </ScrollView>
     </SafeAreaView>
-    <BottomModal
-      visible={visibleModal}
-      onHardwareBackPress={()=> setVisibleModal(!visibleModal)}
-      onBackdropPress={()=> setVisibleModal(!visibleModal)}
-      onTouchOutside={()=> setVisibleModal(!visibleModal)}
-      swipeDirection={["up", "down"]}
-      swipeThreshold={200}
-      modalAnimation={
-        new SlideAnimation({
-          slideFrom: "bottom"
-        })
-      }
-    >
-      <ModalContent style={{ width: "100%", height: 400 }}>
-        <View>
-          <Text>Choose your location...</Text>
-        </View>
-      </ModalContent>
-        
-    </BottomModal>
+    <BottomSheetModalProvider>
+        <BottomSheetModal
+            ref={bottomSheetModalRef}
+            index={1}
+            snapPoints={snapPoints}
+            onChange={handleSheetChanges}
+          >
+          <View>
+            <Text>Awesome 🎉</Text>
+          </View>
+        </BottomSheetModal>
+      </BottomSheetModalProvider>
     </>
   );
 };
