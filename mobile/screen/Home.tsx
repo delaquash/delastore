@@ -27,10 +27,11 @@ import DropDownPicker from "react-native-dropdown-picker";
 import { SliderBox }  from "react-native-image-slider-box";
 import { useSelector } from "react-redux";
 import { RootState } from "../store";
+import {GestureHandlerRootView} from 'react-native-gesture-handler'
 import ProductItem from "../component/ProductItem";
 import { deals, images, list, offers } from "../data";
 import { ItemProps, Product } from "../types/types";
-import BottomModalComponent from "../component/BottomModal";
+// import BottomModalComponent from "../component/BottomModal";
 // import AsyncStorage from "@react-native-async-storage/async-storage";
 // import { UserType } from "../UserContext";
 // import jwt_decode from "jwt-decode";
@@ -55,9 +56,12 @@ const Home = () => {
 const bottomSheetModalRef = useRef<BottomSheetModal>(null);
   // variables
   const snapPoints = useMemo(() => ['25%', '50%'], []);
+
   const handlePresentModalPress = useCallback(() => {
     bottomSheetModalRef.current?.present();
+    setVisibleModal(!visibleModal)
   }, []);
+
   const handleSheetChanges = useCallback((index: number) => {
     console.log('handleSheetChanges', index);
   }, []);
@@ -86,6 +90,8 @@ const bottomSheetModalRef = useRef<BottomSheetModal>(null);
 
   return (
     <>
+    <GestureHandlerRootView>
+    <BottomSheetModalProvider>
     <SafeAreaView style={styles.safeAreaView}>
       <ScrollView>
         <View style={styles.viewStyle}>
@@ -104,7 +110,9 @@ const bottomSheetModalRef = useRef<BottomSheetModal>(null);
           onPress={modalKey}
           style={styles.pressableLocation}>
           <Ionicons name="location-outline" size={24} color="black" />
-          <Pressable>
+          <Pressable
+              onPress={handlePresentModalPress}
+          >
             <Text style={styles.address}>
               42, Ayonnuga Street, Ikoyi Boulevard
             </Text>
@@ -223,7 +231,7 @@ const bottomSheetModalRef = useRef<BottomSheetModal>(null);
         </View>
       </ScrollView>
     </SafeAreaView>
-    <BottomSheetModalProvider>
+    
         <BottomSheetModal
             ref={bottomSheetModalRef}
             index={1}
@@ -235,6 +243,8 @@ const bottomSheetModalRef = useRef<BottomSheetModal>(null);
           </View>
         </BottomSheetModal>
       </BottomSheetModalProvider>
+    
+    </GestureHandlerRootView>
     </>
   );
 };

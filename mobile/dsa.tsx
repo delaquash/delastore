@@ -29,8 +29,12 @@
 //         /* The line `for(var j= i-1;  j >= 0 && arr[j] > currentVal; j--)` is a nested `for` loop that
 //         iterates over the array `arr` from index `i-1` to 0. */
 //         for(var j= i-1;  j >= 0 && arr[j] > currentVal; j--){
-
-//         }
+//                 /* `arr[j+1] = arr[j]` is shifting the element at index `j` to the right by one
+//                 position. This is done to make space for the `currentVal` to be inserted at the
+//                 correct position in the sorted portion of the array. */
+//                 arr[j+1] = arr[j]
+//          }
+//             arr[j] = currentVal
 //     }
 //     return arr;
 // }
