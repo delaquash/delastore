@@ -8,7 +8,6 @@ import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 // import React, { useCallback, useEffect, useState } from 'react';
 
-import BottomModalComponent from "../component/BottomModal";
 import {
   Image,
   Platform,
@@ -34,13 +33,9 @@ import { ItemProps, Product } from "../types/types";
 
 
 
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 // import { View, Text, StyleSheet, Button } from 'react-native';
-import {
-  BottomSheetModal,
-  BottomSheetModalProvider,
-} from '@gorhom/bottom-sheet';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import BottomModal from "../component/BottomModal";
 
 
 const Home = () => {
@@ -58,10 +53,6 @@ const Home = () => {
     { label: "women's clothing", value: "women's clothing" },
   ]);
 
-  // 09040547464
-
-
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -78,25 +69,7 @@ const Home = () => {
     setOpen(!open);
   }, []);
 
-
-  const bottomSheetModalRef = useRef<BottomSheetModal>(null);
-  // variables
-  const snapPoints = useMemo(() => ['25','50%'], []);
-
-  const handlePresentModalPress = useCallback(() => {
-    bottomSheetModalRef.current?.present();
-    // setVisibleModal(!visibleModal)
-    console.log("pressed");
-  }, []);
-
-  const handleSheetChanges = useCallback((index: number) => {
-    console.log('handleSheetChanges', index);
-  }, []);
-
-
-
   const modalKey = () => {
-    console.log("Pressed")
     setVisibleModal(!visibleModal)
   }
 
@@ -117,14 +90,16 @@ const Home = () => {
             <Feather name="mic" size={24} color="black" />
           </View>
           <Pressable
-            onPress={handlePresentModalPress}
+            onPress={modalKey}
             style={styles.pressableLocation}
           >
+
             <Ionicons name="location-outline" size={24} color="black" />
             <Pressable>
               <Text style={styles.address}>
                 42, Ayonnuga Street, Ikoyi Boulevard
               </Text>
+
             </Pressable>
             <MaterialIcons name="keyboard-arrow-down" size={24} color="black" />
           </Pressable>
@@ -240,42 +215,19 @@ const Home = () => {
           </View>
         </ScrollView>
       </SafeAreaView>
-      <BottomSheetModalProvider>
-          <View style={styles.bottomSheetContainer}>
-          {/* <Button
-          onPress={handlePresentModalPress}
-          title="Present Modal"
-          color="black"
-        /> */}
-            <BottomSheetModal
-              ref={bottomSheetModalRef}
-              index={1}
-              snapPoints={snapPoints}
-              onChange={handleSheetChanges}
-            >
-              <View style={styles.bottomContentContainer}>
-                <Text>Awesome 🎉</Text>
-              </View>
-            </BottomSheetModal>
-          </View>
-        </BottomSheetModalProvider>
+      {visibleModal && <BottomModal />}
     </>
   );
 };
 
+
+// 7142335262
+// fairmoney
+
 export default Home;
 
 const styles = StyleSheet.create({
-  bottomSheetContainer: {
-    flex: 1,
-    padding: 24,
-    justifyContent: 'center',
-    backgroundColor: 'grey'
-  },
-  bottomContentContainer: {
-    flex: 1,
-    alignItems: 'center',
-  },
+
   safeAreaView: {
     paddingTop: Platform.OS === "android" ? 40 : 0,
     flex: 1,
