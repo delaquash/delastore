@@ -1,55 +1,33 @@
-// import { Entypo } from "@expo/vector-icons";
-import { AntDesign, Entypo, Ionicons } from "@expo/vector-icons";
-import {
-  BottomSheetModal,
-  BottomSheetModalProvider,
-} from '@gorhom/bottom-sheet';
-import { useNavigation } from "@react-navigation/native";
-import React, { useRef, useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, Pressable } from 'react-native'
+import React, { useState } from 'react';
+import { MaterialIcons, Ionicons, Feather } from "@expo/vector-icons";
+import { Entypo } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons"
+import { BottomModal, SlideAnimation, ModalContent } from "react-native-modals";
+import { useNavigation } from '@react-navigation/native';
 
-export interface IAddressProps {
-  name: string;
-  houseNo: number;
-  landmark: string;
-  street: string;
-}
-
-
-const BottomModal = () => {
-  const navigation = useNavigation()
-  const [addresses, setAddresses] = useState<IAddressProps[] | any>([]);
+const ModalBottom = () => {
+    const navigation = useNavigation()
+  const [addresses, setAddresses] = useState([]);
   const [isOpen, setisOpen] = useState(false)
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedAddress, setSelectedAdress] = useState("");
-
-
-  // ref
-  const bottomSheetModalRef = useRef<BottomSheetModal>(null);
-
-  // variables
-  const snapPoints = ['40%'];
-
-  // callbacks
-  const handlePresentModalPress = () => {
-    bottomSheetModalRef.current?.present()
-  };
-
   return (
-    <BottomSheetModalProvider>
-      <View
-        style={[styles.container, { backgroundColor: isOpen ? "gray" : "white" }]}
+    <BottomModal
+        onBackdropPress={() => setModalVisible(!modalVisible)}
+        swipeDirection={["up", "down"]}
+        swipeThreshold={200}
+        modalAnimation={
+          new SlideAnimation({
+            slideFrom: "bottom",
+          })
+        }
+        onHardwareBackPress={() => setModalVisible(!modalVisible)}
+        visible={modalVisible}
+        onTouchOutside={() => setModalVisible(!modalVisible)}
       >
-        <BottomSheetModal
-          ref={bottomSheetModalRef}
-          index={1}
-          snapPoints={snapPoints}
-          // onChange={handleSheetChanges}
-          backgroundStyle={{ borderRadius: 50 }}
-        >
-          <View
-          // style={{ marginBottom: 8 }}
-          >
+        <ModalContent style={{ width: "100%", height: 400 }}>
+          <View style={{ marginBottom: 8 }}>
             <Text style={{ fontSize: 16, fontWeight: "500" }}>
               Choose your Location
             </Text>
@@ -61,10 +39,10 @@ const BottomModal = () => {
           </View>
 
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-             {/* already added addresses  */}
+            {/* already added addresses */}
             {addresses?.map((item, index) => (
               <Pressable
-                onPress={() => setSelectedAdress(item)}
+              onPress={() => setSelectedAdress(item)}
                 style={{
                   width: 140,
                   height: 140,
@@ -76,7 +54,7 @@ const BottomModal = () => {
                   gap: 3,
                   marginRight: 15,
                   marginTop: 10,
-                  // backgroundColor: selectedAddress === item ? "#FBCEB1" : "white"
+                  backgroundColor:selectedAddress === item ? "#FBCEB1" : "white"
                 }}
               >
                 <View
@@ -110,7 +88,7 @@ const BottomModal = () => {
               </Pressable>
             ))}
 
-             <Pressable
+            <Pressable
               onPress={() => {
                 setModalVisible(false);
                 navigation.navigate("Address");
@@ -136,9 +114,9 @@ const BottomModal = () => {
                 Add an Address or pick-up point
               </Text>
             </Pressable>
-             </ScrollView>
+          </ScrollView>
 
-           <View style={{ flexDirection: "column", gap: 7, marginBottom: 30 }}>
+          <View style={{ flexDirection: "column", gap: 7, marginBottom: 30 }}>
             <View
               style={{ flexDirection: "row", alignItems: "center", gap: 5 }}
             >
@@ -167,28 +145,11 @@ const BottomModal = () => {
               </Text>
             </View>
           </View>
-        </BottomSheetModal>
-      </View>
-    </BottomSheetModalProvider>
-
+        </ModalContent>
+      </BottomModal>
   )
-};
+}
 
-export default BottomModal;
+export default ModalBottom
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    // backgroundColor: "gray",
-    alignItems: "center",
-    justifyContent: "center",
-  }
-  // bottomContentContainer: {
-  //   flex: 1,
-  //   alignItems: 'center',
-  //   marginBottom: 8,
-  // },
-})
-
-
-
+const styles = StyleSheet.create({})

@@ -19,4 +19,13 @@ export interface offerProps extends dealProps {
     offer: string;
 }
 
+export interface IAddressProps {
+    name: string;
+    houseNo: number;
+    landmark: string;
+    street: string;
+    mobileNo?: number;
+    postalCode?: string;
+  }
+
 // export interface offerProps{}

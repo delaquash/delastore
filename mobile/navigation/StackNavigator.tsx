@@ -10,12 +10,14 @@ import Cart from '../screen/Cart';
 import Profile from '../screen/Profile';
 import ProductInfo from '../screen/ProductInfo';
 import { createStackNavigator } from '@react-navigation/stack';
+import AddAddressScreen from '../screen/AddAddressScreen'
 
 
 export type ScreenStackParamList = {
     Login: undefined
     Register: undefined
     Main: undefined
+    AddAddressScreen: undefined
     Info: { carouselImage: string[], titles: string, prices: number}
 }
 
@@ -99,6 +101,11 @@ const StackNavigator = () => {
           component={ProductInfo}
           options={{ headerShown: false }}
           initialParams={{}}
+        />
+        <Stack.Screen 
+          name="AddAddressScreen"
+          component={AddAddressScreen}
+          options={{ headerShown: false }}
         />
       </Stack.Navigator>
     </NavigationContainer>

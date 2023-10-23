@@ -36,6 +36,7 @@ import { ItemProps, Product } from "../types/types";
 import React, { useCallback, useEffect, useState } from 'react';
 // import { View, Text, StyleSheet, Button } from 'react-native';
 import BottomModal from "../component/BottomModal";
+import ModalBottom from "../component/ModalBottom";
 
 
 const Home = () => {
@@ -215,7 +216,7 @@ const Home = () => {
           </View>
         </ScrollView>
       </SafeAreaView>
-      {visibleModal && <BottomModal />}
+      {visibleModal && <ModalBottom />}
     </>
   );
 };
