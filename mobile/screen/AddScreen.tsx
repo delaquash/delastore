@@ -8,6 +8,7 @@ import {
     Alert,
   } from "react-native";
   import React, { useEffect, useState,useContext } from "react";
+  import { AddressProps } from "../types/dataType";
   import AsyncStorage from "@react-native-async-storage/async-storage";
   import jwt_decode from "jwt-decode"
 //   import { UserType } from "../UserContext";
@@ -17,51 +18,45 @@ import {
 
   const AddressScreen = () => {
     const navigation = useNavigation();
-  const [name, setName] = useState("");
-  const [mobileNo, setMobileNo] = useState("");
-  const [houseNo, setHouseNo] = useState("");
-  const [street, setStreet] = useState("");
-  const [landmark, setLandmark] = useState("");
-  const [postalCode, setPostalCode] = useState("");
-//   const {userId,setUserId} = useContext(UserType)
-//   useEffect(() => {
-//     const fetchUser = async() => {
-//         const token = await AsyncStorage.getItem("authToken");
-//         const decodedToken = jwt_decode(token);
-//         const userId = decodedToken.userId;
-//         setUserId(userId)
-//     }
+    const [address, setAddress] = useState<AddressProps>({
+        name: "",
+        mobileNo: "",
+        houseNo: "",
+        street: "",
+        landmark: "",
+        postalCode: ""
+      });
 
-//     fetchUser();
-//   },[]);
-//   console.log(userId)
-//   const handleAddAddress = () => {
-//       const address = {
-//           name,
-//           mobileNo,
-//           houseNo,
-//           street,
-//           landmark,
-//           postalCode
-//       }
+      const handleChange = (property, value) => {
+        setAddress({
+          ...address,
+          [property]: value,
+        });
+      };
 
-//       axios.post("http://localhost:8000/addresses",{userId,address}).then((response) => {
-//           Alert.alert("Success","Addresses added successfully");
-//           setName("");
-//           setMobileNo("");
-//           setHouseNo("");
-//           setStreet("");
-//           setLandmark("");
-//           setPostalCode("");
+      const handleAddAddress = () => {
+        axios.post("http://localhost:8000/addresses", { userId, address })
+          .then((response) => {
+            Alert.alert("Success", "Address added successfully");
+            setAddress({
+              name: "",
+              mobileNo: "",
+              houseNo: "",
+              street: "",
+              landmark: "",
+              postalCode: ""
+            });
+      
+            setTimeout(() => {
+              navigation.goBack();
+            }, 500);
+          })
+          .catch((error) => {
+            Alert.alert("Error", "Failed to add address");
+            console.log("error", error);
+          });
+      };
 
-//           setTimeout(() => {
-//             navigation.goBack();
-//           },500)
-//       }).catch((error) => {
-//           Alert.alert("Error","Failed to add address")
-//           console.log("error",error)
-//       })
-//   }
   return (
     <ScrollView style={{ marginTop: 50 }}>
       <View style={{ height: 50, backgroundColor: "#00CED1" }} />
@@ -89,8 +84,8 @@ import {
           </Text>
 
           <TextInput
-            value={name}
-            onChangeText={(text) => setName(text)}
+            value={address.name}
+            onChangeText={(text) => handleChange("name", text)}
             placeholderTextColor={"black"}
             style={{
               padding: 10,
@@ -109,8 +104,8 @@ import {
           </Text>
 
           <TextInput
-            value={mobileNo}
-            onChangeText={(text) => setMobileNo(text)}
+            value={address.mobileNo}
+            onChangeText={(text) => handleChange('mobileNo', text)}
             placeholderTextColor={"black"}
             style={{
               padding: 10,
@@ -129,8 +124,8 @@ import {
           </Text>
 
           <TextInput
-            value={houseNo}
-            onChangeText={(text) => setHouseNo(text)}
+            value={address.houseNo}
+            onChangeText={(text) => handleChange('houseNo', text)}
             placeholderTextColor={"black"}
             style={{
               padding: 10,
@@ -148,8 +143,8 @@ import {
             Area,Street,sector,village
           </Text>
           <TextInput
-            value={street}
-            onChangeText={(text) => setStreet(text)}
+            value={address.street}
+            onChangeText={(text) => handleChange('street', text)}
             placeholderTextColor={"black"}
             style={{
               padding: 10,
@@ -165,8 +160,8 @@ import {
         <View style={{ marginVertical: 10 }}>
           <Text style={{ fontSize: 15, fontWeight: "bold" }}>Landmark</Text>
           <TextInput
-            value={landmark}
-            onChangeText={(text) => setLandmark(text)}
+            value={address.landmark}
+            onChangeText={(text) => handleChange('landmark', text)}
             placeholderTextColor={"black"}
             style={{
               padding: 10,
@@ -183,8 +178,8 @@ import {
           <Text style={{ fontSize: 15, fontWeight: "bold" }}>Pincode</Text>
 
           <TextInput
-            value={postalCode}
-            onChangeText={(text) => setPostalCode(text)}
+            value={address.postalCode}
+            onChangeText={(text) => handleChange('postalCode', text)}
             placeholderTextColor={"black"}
             style={{
               padding: 10,
