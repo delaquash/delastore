@@ -80,8 +80,31 @@ const login = async (req: Request, res: Response, next: NextFunction) => {
 };
 
 
-const address = async (req: Request, res: Response, next: NextFunction) => {
+/**
+ * Create new order
+ * @route address /address
+ * @access Private
+ */
 
+const address = async (req: Request, res: Response, next: NextFunction) => {
+      try {
+        const { userId, address } = req.body;
+        const user =await User.findById(userId)
+        // if there is no user
+        if (!user) {
+          const message = "User not found...";
+          const error = errorHandler(message, 404);
+          return next(error);
+        }
+        // if there is a user
+        user.addresses.push(address)
+        // save new user address
+        await user.save()        
+      } catch (error: any) {
+        if (!error.status) error.status = 500;
+        next(error);
+        console.log(error);
+      }
 }
 
-export { login, register };
+export { login, register, address };
