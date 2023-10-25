@@ -89,7 +89,7 @@ const login = async (req: Request, res: Response, next: NextFunction) => {
 const address = async (req: Request, res: Response, next: NextFunction) => {
       try {
         const { userId, address } = req.body;
-        const user =await User.findById(userId)
+        const user = await User.findById(userId)
         // if there is no user
         if (!user) {
           const message = "User not found...";
@@ -106,5 +106,7 @@ const address = async (req: Request, res: Response, next: NextFunction) => {
         console.log(error);
       }
 }
+
+
 
 export { login, register, address };
