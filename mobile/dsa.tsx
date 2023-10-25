@@ -22,6 +22,11 @@
 //   }
 
 
+// const swapInJS =(arr: number[], indx1:number, indx2:number): void =>{
+//     arr[indx1]arry[indx2] = arr[indx2]arr[indx1]
+// }
+
+
 
 // function insertSort(arr:[]){
 //     for (var i = 1, i < arr.length; i++){
