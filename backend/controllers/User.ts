@@ -108,5 +108,29 @@ const address = async (req: Request, res: Response, next: NextFunction) => {
 }
 
 
+/**
+ * Create new order
+ * @route address/:userID
+ * @access Private
+ */
+
+const userAdress = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const userId = req.params.userId;
+    const user = await User.findById(userId)
+    // if there is no user
+    if (!user) {
+      const message = "User not found...";
+      const error = errorHandler(message, 404);
+      return next(error);
+    }
+    const addresses = user.addresses
+    res.status(200).json({address})
+  } catch (error: any) {
+    if (!error.status) error.status = 500;
+    next(error);
+    console.log(error);
+  }
+}
 
 export { login, register, address };
