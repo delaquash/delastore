@@ -18,7 +18,7 @@ import {
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { CartProps, addToCart } from "../reducers/cartReducer";
-import { RootState } from "store";
+import { RootState } from "../store";
 
 const ProductInfo = () => {
   const cart = useSelector((state:RootState)=> state.cart.cart);

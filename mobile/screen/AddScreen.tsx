@@ -11,12 +11,17 @@ import {
   import { AddressProps } from "../types/dataType";
   import AsyncStorage from "@react-native-async-storage/async-storage";
   import jwt_decode from "jwt-decode"
-//   import { UserType } from "../UserContext";
   import axios from "axios";
+  import { userType } from "../context/useContext";
   import { useNavigation } from "@react-navigation/native";
 
+  interface DecodedToken {
+    userId: string;
+    // Add other properties from your decoded token if necessary
+  }
 
   const AddressScreen = () => {
+    const {userId, setUserId} =useContext(userType)
     const navigation = useNavigation();
     const [address, setAddress] = useState<AddressProps>({
         name: "",
@@ -27,7 +32,27 @@ import {
         postalCode: ""
       });
 
-      const handleChange = (property, value) => {
+
+      useEffect(() => {
+        const fetchUser = async () => {
+          try {
+            const token: string | null = await AsyncStorage.getItem('authToken');
+    
+            if (token) {
+              const decodedToken: DecodedToken = jwt_decode(token);
+              const userId: string = decodedToken.userId;
+              setUserId(userId);
+            }
+          } catch (error) {
+            // Handle errors, e.g., AsyncStorage or decoding errors
+            console.error('Error fetching user:', error);
+          }
+        };
+    
+        fetchUser();
+      }, []);
+    
+      const handleChange = (property: string, value: string) => {
         setAddress({
           ...address,
           [property]: value,
@@ -35,7 +60,7 @@ import {
       };
 
       const handleAddAddress = () => {
-        axios.post("http://localhost:8000/addresses", { userId, address })
+        axios.post("http://localhost:8000/address", { userId, address })
           .then((response) => {
             Alert.alert("Success", "Address added successfully");
             setAddress({
