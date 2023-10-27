@@ -1,6 +1,6 @@
 import { AntDesign, Entypo, Feather, MaterialIcons } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
-import React, { useState } from "react";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import {
     Pressable,
     ScrollView,
@@ -10,10 +10,31 @@ import {
     View,
 } from "react-native";
 import { IAddressProps } from "../types/dataType";
+import { userType } from "../context/useContext";
+import axios from "axios";
 
 const AddAddressScreen = () => {
     const navigation = useNavigation();
+    const {setUserId, userId} = useContext(userType)
     const [addresses, setAddresses] = useState<IAddressProps[]>([]);
+    useEffect(() => {
+        fetchAddresses();
+      }, []);
+
+      const fetchAddresses = async () => {
+        try {
+            const res = await axios.get(`/address/${userId}`)
+           const { addresses } = res.data
+           setAddresses(addresses)
+        } catch (error) {
+            console.log("error", error);
+        }
+      }
+      useFocusEffect(
+        useCallback(() => {
+          fetchAddresses();
+        }, [])
+      );
     return (
         <ScrollView showsVerticalScrollIndicator={false} style={{ marginTop: 50 }}>
             <View

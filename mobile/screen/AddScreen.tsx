@@ -60,7 +60,7 @@ import {
       };
 
       const handleAddAddress = () => {
-        axios.post("http://localhost:8000/address", { userId, address })
+        axios.post("/address", { userId, address })
           .then((response) => {
             Alert.alert("Success", "Address added successfully");
             setAddress({

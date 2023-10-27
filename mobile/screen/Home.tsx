@@ -6,7 +6,6 @@ import {
 } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
-// import React, { useCallback, useEffect, useState } from 'react';
 
 import {
   Image,
@@ -27,25 +26,26 @@ import { deals, images, list, offers } from "../data";
 import { RootState } from "../store";
 import { ItemProps, Product } from "../types/types";
 // import BottomModalComponent from "../component/BottomModal";
-// import AsyncStorage from "@react-native-async-storage/async-storage";
-// import { UserType } from "../UserContext";
-// import jwt_decode from "jwt-decode";
-
-
-
-import React, { useCallback, useEffect, useState } from 'react';
-// import { View, Text, StyleSheet, Button } from 'react-native';
-import BottomModal from "../component/BottomModal";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import jwt_decode from "jwt-decode";
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import ModalBottom from "../component/ModalBottom";
+import { userType } from "../context/useContext";
 
+interface DecodedToken {
+  userId: string;
+  // Add other properties from your decoded token if necessary
+}
 
 const Home = () => {
   const navigation = useNavigation();
+  const { userId, setUserId } = useContext(userType)
   const cart = useSelector((state: RootState) => state.cart.cart);
   const [open, setOpen] = useState(false);
   const [visibleModal, setVisibleModal] = useState(false)
   // console.log(cart);
   const [products, setProducts] = useState<Product[]>([]);
+  const [addresses, setAddresses] = useState<[]>([])
   const [category, setCategory] = useState<string>("jewelery");
   const [items, setItems] = useState<ItemProps[]>([
     { label: "Men's clothing", value: "men's clothing" },
@@ -64,6 +64,43 @@ const Home = () => {
       }
     };
     fetchData();
+  }, []);
+
+
+  useEffect(() => {
+    if (userId) {
+      fetchAddresses()
+    }
+  }, [])
+
+
+  const fetchAddresses = async () => {
+    try {
+      const res = await axios.get(`/address/${userId}`)
+      const { addresses } = res.data
+      setAddresses(addresses)
+    } catch (error) {
+      console.log("error", error);
+    }
+  }
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const token: string | null = await AsyncStorage.getItem('authToken');
+
+        if (token) {
+          const decodedToken: DecodedToken = jwt_decode(token);
+          const userId: string = decodedToken.userId;
+          setUserId(userId);
+        }
+      } catch (error) {
+        // Handle errors, e.g., AsyncStorage or decoding errors
+        console.error('Error fetching user:', error);
+      }
+    };
+
+    fetchUser();
   }, []);
 
   const onGenderOpen = useCallback(() => {
