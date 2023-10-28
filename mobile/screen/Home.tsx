@@ -71,7 +71,7 @@ const Home = () => {
     if (userId) {
       fetchAddresses()
     }
-  }, [])
+  }, [userId, visibleModal])
 
 
   const fetchAddresses = async () => {
