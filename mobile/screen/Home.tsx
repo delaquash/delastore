@@ -45,7 +45,8 @@ const Home = () => {
   const [visibleModal, setVisibleModal] = useState(false)
   // console.log(cart);
   const [products, setProducts] = useState<Product[]>([]);
-  const [addresses, setAddresses] = useState<[]>([])
+  const [addresses, setAddresses] = useState<[]>([]);
+  const [selectedAddress, setSelectedAddress] = useState("")
   const [category, setCategory] = useState<string>("jewelery");
   const [items, setItems] = useState<ItemProps[]>([
     { label: "Men's clothing", value: "men's clothing" },
