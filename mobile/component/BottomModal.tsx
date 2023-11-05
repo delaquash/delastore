@@ -18,7 +18,7 @@ export interface IAddressProps {
 
 const BottomModal = () => {
   const navigation = useNavigation()
-  const [addresses, setAddresses] = useState<IAddressProps[] | any>([]);
+  const [addresses, setAddresses] = useState<IAddressProps[]>([]);
   const [isOpen, setisOpen] = useState(false)
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedAddress, setSelectedAdress] = useState("");
