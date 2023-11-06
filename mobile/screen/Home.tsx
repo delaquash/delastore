@@ -2,8 +2,9 @@ import {
   AntDesign,
   Feather,
   Ionicons,
-  MaterialIcons,
+  MaterialIcons
 } from "@expo/vector-icons";
+
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 
@@ -29,7 +30,7 @@ import { ItemProps, Product } from "../types/types";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import jwt_decode from "jwt-decode";
 import React, { useCallback, useContext, useEffect, useState } from 'react';
-import ModalBottom from "../component/ModalBottom";
+import BottomModal from "../component/BottomModal";
 import { userType } from "../context/useContext";
 
 interface DecodedToken {
@@ -59,7 +60,7 @@ const Home = () => {
     const fetchData = async () => {
       try {
         const res = await axios.get("https://fakestoreapi.com/products");
-        setProducts(res.data);
+        setProducts(res.data as []);
       } catch (error) {
         console.log(error, "error message");
       }
@@ -254,7 +255,8 @@ const Home = () => {
           </View>
         </ScrollView>
       </SafeAreaView>
-      {visibleModal && <ModalBottom />}
+      {visibleModal && <BottomModal />}
+
     </>
   );
 };

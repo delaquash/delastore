@@ -31,7 +31,7 @@ if(token){
 }
 
 const api = axios.create({
-    baseURL: "http://localhost:5000",
+    baseURL: "https://6bcd-41-58-130-147.ngrok-free.app",
     headers,  // base url
 })
 

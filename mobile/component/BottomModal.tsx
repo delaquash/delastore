@@ -4,10 +4,11 @@ import {
   BottomSheetModal,
   BottomSheetModalProvider,
 } from '@gorhom/bottom-sheet';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { useNavigation } from "@react-navigation/native";
 import React, { useRef, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
-
+import BottomSheet from "@gorhom/bottom-sheet";
 export interface IAddressProps {
   name: string;
   houseNo: number;
@@ -22,27 +23,23 @@ const BottomModal = () => {
   const [isOpen, setisOpen] = useState(false)
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedAddress, setSelectedAdress] = useState("");
-
-
   // ref
-  const bottomSheetModalRef = useRef<BottomSheetModal>(null);
+  const bottomSheetModalRef = useRef<BottomSheet>(null);
 
   // variables
-  const snapPoints = ['40%'];
+  const snapPoints = ['50%'];
 
   // callbacks
   const handlePresentModalPress = () => {
-    bottomSheetModalRef.current?.present()
+    bottomSheetModalRef.current?.close();
   };
 
   return (
-    <BottomSheetModalProvider>
-      <View
-        style={[styles.container, { backgroundColor: isOpen ? "gray" : "white" }]}
-      >
-        <BottomSheetModal
+    <GestureHandlerRootView>
+      
+        <BottomSheet
           ref={bottomSheetModalRef}
-          index={1}
+          index={0}
           snapPoints={snapPoints}
           // onChange={handleSheetChanges}
           backgroundStyle={{ borderRadius: 50 }}
@@ -61,7 +58,7 @@ const BottomModal = () => {
           </View>
 
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-             {/* already added addresses  */}
+              {/* already added addresses  */}
             {addresses?.map((item, index) => (
               <Pressable
                 onPress={() => setSelectedAdress(item)}
@@ -167,9 +164,10 @@ const BottomModal = () => {
               </Text>
             </View>
           </View>
-        </BottomSheetModal>
-      </View>
-    </BottomSheetModalProvider>
+        </BottomSheet>
+   
+     </GestureHandlerRootView>
+    
 
   )
 };

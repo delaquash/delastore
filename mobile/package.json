@@ -9,7 +9,7 @@
     "web": "expo start --web"
   },
   "dependencies": {
-    "@gorhom/bottom-sheet": "^4",
+    "@gorhom/bottom-sheet": "^4.5.1",
     "@react-native-async-storage/async-storage": "1.18.2",
     "@react-native-google-signin/google-signin": "^10.0.1",
     "@react-navigation/bottom-tabs": "^6.5.8",
@@ -49,5 +49,5 @@
     "typescript": "^5.1.3"
   },
   "private": true,
-  "proxy": "http://localhost:5000"
+  "proxy": "https://6bcd-41-58-130-147.ngrok-free.app/"
 }
