@@ -6,9 +6,11 @@ export interface CartProps {
   name: string;
   price: number;
   quantity: number;
+  title?: string;
 }
 
 interface CartState {
+  [x: string]: any;
   cart: CartProps[];
 }
 
