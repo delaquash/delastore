@@ -73,7 +73,7 @@ const BottomModal = () => {
                   gap: 3,
                   marginRight: 15,
                   marginTop: 10,
-                  // backgroundColor: selectedAddress === item ? "#FBCEB1" : "white"
+                  backgroundColor: selectedAddress === item ? "#FBCEB1" : "white"
                 }}
               >
                 <View

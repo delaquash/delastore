@@ -33,21 +33,34 @@ import React, { useCallback, useContext, useEffect, useState } from 'react';
 import BottomModal from "../component/BottomModal";
 import { userType } from "../context/useContext";
 
+
 interface DecodedToken {
   userId: string;
   // Add other properties from your decoded token if necessary
 }
 
+export interface IAddressProps {
+  name: string;
+  houseNo: number;
+  landmark: string;
+  street: string;
+}
+
 const Home = () => {
+  const initialAddress: IAddressProps = {
+    name: '',
+    houseNo: 0,
+    landmark: '',
+    street: ''
+  };
   const navigation = useNavigation();
   const { userId, setUserId } = useContext(userType)
   const cart = useSelector((state: RootState) => state.cart.cart);
   const [open, setOpen] = useState(false);
   const [visibleModal, setVisibleModal] = useState(false)
-  // console.log(cart);
   const [products, setProducts] = useState<Product[]>([]);
   const [addresses, setAddresses] = useState<[]>([]);
-  const [selectedAddress, setSelectedAddress] = useState("")
+  const [selectedAddress, setSelectedAdress] = useState<IAddressProps>(initialAddress);
   const [category, setCategory] = useState<string>("jewelery");
   const [items, setItems] = useState<ItemProps[]>([
     { label: "Men's clothing", value: "men's clothing" },
@@ -133,12 +146,17 @@ const Home = () => {
             onPress={modalKey}
             style={styles.pressableLocation}
           >
-
             <Ionicons name="location-outline" size={24} color="black" />
             <Pressable>
-              <Text style={styles.address}>
-                42, Ayonnuga Street, Ikoyi Boulevard
-              </Text>
+              {selectedAddress ? (
+                <Text>
+                    Deliver to {selectedAddress.name} - {selectedAddress.street}
+                </Text>
+              ): (
+                <Text style={{ fontSize: 13, fontWeight: "500" }}>
+                  Add a Address
+                </Text>
+              )}
 
             </Pressable>
             <MaterialIcons name="keyboard-arrow-down" size={24} color="black" />
