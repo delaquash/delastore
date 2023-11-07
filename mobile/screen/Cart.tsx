@@ -1,6 +1,6 @@
-import React from "react";
 import { AntDesign, Feather } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import React from "react";
 
 import {
   Image,
@@ -30,7 +30,7 @@ const Cart = () => {
   };
 
   return (
-    <ScrollView style={{ marginTop: 55, flex: 1, backgroundColor: "white" }}>
+    <ScrollView style={styles.containerScroll }>
       <View
         style={styles.container}
       >
@@ -57,19 +57,10 @@ const Cart = () => {
 
       <Pressable
         // onPress={() => navigation.navigate("Confirm")}
-        style={{
-          backgroundColor: "#FFC72C",
-          padding: 10,
-          borderRadius: 5,
-          justifyContent: "center",
-          alignItems: "center",
-          marginHorizontal: 10,
-          marginTop: 10,
-        }}
+        style={styles.pressLength}
       >
         {/* <Text>Proceed to Buy ({cart.length}) items</Text> */}
       </Pressable>
-
       <Text
         style={{
           height: 1,
@@ -82,23 +73,11 @@ const Cart = () => {
       <View style={{ marginHorizontal: 10 }}>
         {cart?.map((item: CartProps, index: React.Key | null | undefined) => (
           <View
-            style={{
-              backgroundColor: "white",
-              marginVertical: 10,
-              borderBottomColor: "#F0F0F0",
-              borderWidth: 2,
-              borderLeftWidth: 0,
-              borderTopWidth: 0,
-              borderRightWidth: 0,
-            }}
+            style={styles.cartView}
             key={index}
           >
             <Pressable
-              style={{
-                marginVertical: 10,
-                flexDirection: "row",
-                justifyContent: "space-between",
-              }}
+              style={styles.cartPress}
             >
               <View>
                 {/* <Image
@@ -260,6 +239,11 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
   },
+  containerScroll: { 
+    marginTop: 55, 
+    flex: 1, 
+    backgroundColor: "white"
+   },
   containerPress: {
     flexDirection: "row",
     alignItems: "center",
@@ -269,5 +253,28 @@ const styles = StyleSheet.create({
     borderRadius: 3,
     height: 38,
     flex: 1,
-  }
+  },
+  pressLength: {
+    backgroundColor: "#FFC72C",
+    padding: 10,
+    borderRadius: 5,
+    justifyContent: "center",
+    alignItems: "center",
+    marginHorizontal: 10,
+    marginTop: 10,
+  },
+  cartView:{
+    backgroundColor: "white",
+    marginVertical: 10,
+    borderBottomColor: "#F0F0F0",
+    borderWidth: 2,
+    borderLeftWidth: 0,
+    borderTopWidth: 0,
+    borderRightWidth: 0,
+  },
+  cartPress:{
+    marginVertical: 10,
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
 })
