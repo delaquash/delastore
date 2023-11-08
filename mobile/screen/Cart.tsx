@@ -91,7 +91,7 @@ const Cart = () => {
                   {item?.title}
                 </Text>
                 <Text
-                  style={{ fontSize: 20, fontWeight: "bold", marginTop: 6 }}
+                  style={styles.cartPrice}
                 >
                   {item?.price}
                 </Text>
@@ -109,44 +109,22 @@ const Cart = () => {
             </Pressable>
 
             <Pressable
-              style={{
-                marginTop: 15,
-                marginBottom: 10,
-                flexDirection: "row",
-                alignItems: "center",
-                gap: 10,
-              }}
+              style={styles.pressQuantity}
             >
               <View
-                style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                  paddingHorizontal: 10,
-                  paddingVertical: 5,
-                  borderRadius: 7,
-                }}
+                style={styles.viewQuantity}
               >
                 {item?.quantity > 1 ? (
                   <Pressable
                     // onPress={() => decreaseQuantity(item)}
-                    style={{
-                      backgroundColor: "#D8D8D8",
-                      padding: 7,
-                      borderTopLeftRadius: 6,
-                      borderBottomLeftRadius: 6,
-                    }}
+                    style={styles.pressDelete}
                   >
                     <AntDesign name="minus" size={24} color="black" />
                   </Pressable>
                 ) : (
                   <Pressable
                     // onPress={() => deleteItem(item)}
-                    style={{
-                      backgroundColor: "#D8D8D8",
-                      padding: 7,
-                      borderTopLeftRadius: 6,
-                      borderBottomLeftRadius: 6,
-                    }}
+                    style={styles.pressDelete}
                   >
                     <AntDesign name="delete" size={24} color="black" />
                   </Pressable>
@@ -164,61 +142,30 @@ const Cart = () => {
 
                 <Pressable
                   // onPress={() => increaseQuantity(item)}
-                  style={{
-                    backgroundColor: "#D8D8D8",
-                    padding: 7,
-                    borderTopLeftRadius: 6,
-                    borderBottomLeftRadius: 6,
-                  }}
+                  style={styles.pressDelete}
                 >
                   <Feather name="plus" size={24} color="black" />
                 </Pressable>
               </View>
               <Pressable
                 onPress={() => deleteItem(item)}
-                style={{
-                  backgroundColor: "white",
-                  paddingHorizontal: 8,
-                  paddingVertical: 10,
-                  borderRadius: 5,
-                  borderColor: "#C0C0C0",
-                  borderWidth: 0.6,
-                }}
+                style={styles.deleteItem}
               >
                 <Text>Delete</Text>
               </Pressable>
             </Pressable>
 
             <Pressable
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                gap: 10,
-                marginBottom: 15,
-              }}
+              style={styles.pressLater}
             >
               <Pressable
-                style={{
-                  backgroundColor: "white",
-                  paddingHorizontal: 8,
-                  paddingVertical: 10,
-                  borderRadius: 5,
-                  borderColor: "#C0C0C0",
-                  borderWidth: 0.6,
-                }}
+                style={styles.viewLater}
               >
                 <Text>Save For Later</Text>
               </Pressable>
 
               <Pressable
-                style={{
-                  backgroundColor: "white",
-                  paddingHorizontal: 8,
-                  paddingVertical: 10,
-                  borderRadius: 5,
-                  borderColor: "#C0C0C0",
-                  borderWidth: 0.6,
-                }}
+                style={styles.moreInfo}
               >
                 <Text>See More Like this</Text>
               </Pressable>
@@ -277,4 +224,60 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
   },
+  cartPrice: { 
+    fontSize: 20, 
+    fontWeight: "bold", 
+    marginTop: 6
+  },
+  pressQuantity :{
+    marginTop: 15,
+    marginBottom: 10,
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+  },
+  viewQuantity: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    borderRadius: 7,
+  },
+  pressDelete: {
+    backgroundColor: "#D8D8D8",
+    padding: 7,
+    borderTopLeftRadius: 6,
+    borderBottomLeftRadius: 6,
+  },
+  deleteItem: {
+    backgroundColor: "white",
+    paddingHorizontal: 8,
+    paddingVertical: 10,
+    borderRadius: 5,
+    borderColor: "#C0C0C0",
+    borderWidth: 0.6,
+  },
+  pressLater: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+    marginBottom: 15,
+  },
+  viewLater: {
+    backgroundColor: "white",
+    paddingHorizontal: 8,
+    paddingVertical: 10,
+    borderRadius: 5,
+    borderColor: "#C0C0C0",
+    borderWidth: 0.6,
+  },
+  moreInfo:{
+    backgroundColor: "white",
+    paddingHorizontal: 8,
+    paddingVertical: 10,
+    borderRadius: 5,
+    borderColor: "#C0C0C0",
+    borderWidth: 0.6,
+  }
+
 })
