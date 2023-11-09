@@ -19,7 +19,9 @@ const Cart = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const cart = useSelector((state: RootState) => state.cart.cart);
-  const total = cart.map((item)=> item.quantity * item.price).reduce((prev, current)=>current+prev, 0)
+  const total = cart
+          .map((item)=> item.quantity * item.price)
+          .reduce((prev, current)=>current+prev, 0)
   const increaseQuantity = (item: CartProps) => {
     dispatch(incrementQuantity(item));
   };
@@ -52,15 +54,15 @@ const Cart = () => {
 
       <View style={{ padding: 10, flexDirection: "row", alignItems: "center" }}>
         <Text style={{ fontSize: 18, fontWeight: "400" }}>Subtotal : </Text>
-        {/* <Text style={{ fontSize: 20, fontWeight: "bold" }}>{total}</Text> */}
+        <Text style={{ fontSize: 20, fontWeight: "bold" }}>{total}</Text>
       </View>
       <Text style={{ marginHorizontal: 10 }}>EMI details Available</Text>
 
       <Pressable
-        // onPress={() => navigation.navigate("Confirm")}
+        onPress={() => navigation.navigate("Confirm")}
         style={styles.pressLength}
       >
-        {/* <Text>Proceed to Buy ({cart.length}) items</Text> */}
+        <Text>Proceed to Buy ({cart.length}) items</Text>
       </Pressable>
       <Text
         style={{
@@ -81,12 +83,11 @@ const Cart = () => {
               style={styles.cartPress}
             >
               <View>
-                {/* <Image
+                <Image
                 style={{ width: 140, height: 140, resizeMode: "contain" }}
                 source={{ uri: item?.image }}
-              /> */}
+              />
               </View>
-
               <View>
                 <Text numberOfLines={3} style={{ width: 150, marginTop: 10 }}>
                   {item?.title}
@@ -103,9 +104,9 @@ const Cart = () => {
                   }}
                 />
                 <Text style={{ color: "green" }}>In Stock</Text>
-                {/* <Text style={{ fontWeight: "500", marginTop: 6 }}>
+                <Text style={{ fontWeight: "500", marginTop: 6 }}>
                 {item?.rating?.rate} ratings
-              </Text> */}
+              </Text>
               </View>
             </Pressable>
 
@@ -138,7 +139,7 @@ const Cart = () => {
                     paddingVertical: 6,
                   }}
                 >
-                  {/* <Text>{item?.quantity}</Text> */}
+                  <Text>{item?.quantity}</Text>
                 </Pressable>
 
                 <Pressable
