@@ -19,6 +19,7 @@ const Cart = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const cart = useSelector((state: RootState) => state.cart.cart);
+  const total = cart.map((item)=> item.quantity * item.price).reduce((prev, current)=>current+prev, 0)
   const increaseQuantity = (item: CartProps) => {
     dispatch(incrementQuantity(item));
   };
