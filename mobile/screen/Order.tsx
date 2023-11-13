@@ -20,6 +20,8 @@ const Order = () => {
       loop={false}
       speed={0.7}
     />
+
+    {/* 09040547464 */}
     <Text
       style={{
         marginTop: 20,
