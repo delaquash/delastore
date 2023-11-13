@@ -2,11 +2,15 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 
 export interface CartProps {
+  image: string | undefined;
   id: number;
   name: string;
   price: number;
   quantity: number;
   title?: string;
+  rating: {
+    rate: number
+  }
 }
 
 interface CartState {

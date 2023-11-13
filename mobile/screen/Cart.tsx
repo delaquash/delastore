@@ -12,7 +12,12 @@ import {
   View,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-import { CartProps, incrementQuantity, reduceQuantity, removeFromCart } from "../reducers/cartReducer";
+import {
+  CartProps,
+  incrementQuantity,
+  reduceQuantity,
+  removeFromCart,
+} from "../reducers/cartReducer";
 import { RootState } from "../store";
 
 const Cart = () => {
@@ -20,8 +25,8 @@ const Cart = () => {
   const dispatch = useDispatch();
   const cart = useSelector((state: RootState) => state.cart.cart);
   const total = cart
-          .map((item)=> item.quantity * item.price)
-          .reduce((prev, current)=>current+prev, 0)
+    .map((item) => item.quantity * item.price)
+    .reduce((prev, current) => current + prev, 0);
   const increaseQuantity = (item: CartProps) => {
     dispatch(incrementQuantity(item));
   };
@@ -33,13 +38,9 @@ const Cart = () => {
   };
 
   return (
-    <ScrollView style={styles.containerScroll }>
-      <View
-        style={styles.container}
-      >
-        <Pressable
-          style={styles.containerPress}
-        >
+    <ScrollView style={styles.containerScroll}>
+      <View style={styles.container}>
+        <Pressable style={styles.containerPress}>
           <AntDesign
             style={{ paddingLeft: 10 }}
             name="search1"
@@ -75,28 +76,19 @@ const Cart = () => {
 
       <View style={{ marginHorizontal: 10 }}>
         {cart?.map((item: CartProps, index: React.Key | null | undefined) => (
-          <View
-            style={styles.cartView}
-            key={index}
-          >
-            <Pressable
-              style={styles.cartPress}
-            >
+          <View style={styles.cartView} key={index}>
+            <Pressable style={styles.cartPress}>
               <View>
                 <Image
-                style={{ width: 140, height: 140, resizeMode: "contain" }}
-                source={{ uri: item?.image }}
-              />
+                  style={{ width: 140, height: 140, resizeMode: "contain" }}
+                  source={{ uri: item?.image }}
+                />
               </View>
               <View>
                 <Text numberOfLines={3} style={{ width: 150, marginTop: 10 }}>
                   {item?.title}
                 </Text>
-                <Text
-                  style={styles.cartPrice}
-                >
-                  {item?.price}
-                </Text>
+                <Text style={styles.cartPrice}>{item?.price}</Text>
                 <Image
                   style={{ width: 30, height: 30, resizeMode: "contain" }}
                   source={{
@@ -105,27 +97,23 @@ const Cart = () => {
                 />
                 <Text style={{ color: "green" }}>In Stock</Text>
                 <Text style={{ fontWeight: "500", marginTop: 6 }}>
-                {item?.rating?.rate} ratings
-              </Text>
+                  {item?.rating?.rate} ratings
+                </Text>
               </View>
             </Pressable>
 
-            <Pressable
-              style={styles.pressQuantity}
-            >
-              <View
-                style={styles.viewQuantity}
-              >
+            <Pressable style={styles.pressQuantity}>
+              <View style={styles.viewQuantity}>
                 {item?.quantity > 1 ? (
                   <Pressable
-                    // onPress={() => decreaseQuantity(item)}
+                    onPress={() => decreaseQuantity(item)}
                     style={styles.pressDelete}
                   >
                     <AntDesign name="minus" size={24} color="black" />
                   </Pressable>
                 ) : (
                   <Pressable
-                    // onPress={() => deleteItem(item)}
+                    onPress={() => deleteItem(item)}
                     style={styles.pressDelete}
                   >
                     <AntDesign name="delete" size={24} color="black" />
@@ -143,7 +131,7 @@ const Cart = () => {
                 </Pressable>
 
                 <Pressable
-                  // onPress={() => increaseQuantity(item)}
+                  onPress={() => increaseQuantity(item)}
                   style={styles.pressDelete}
                 >
                   <Feather name="plus" size={24} color="black" />
@@ -157,18 +145,12 @@ const Cart = () => {
               </Pressable>
             </Pressable>
 
-            <Pressable
-              style={styles.pressLater}
-            >
-              <Pressable
-                style={styles.viewLater}
-              >
+            <Pressable style={styles.pressLater}>
+              <Pressable style={styles.viewLater}>
                 <Text>Save For Later</Text>
               </Pressable>
 
-              <Pressable
-                style={styles.moreInfo}
-              >
+              <Pressable style={styles.moreInfo}>
                 <Text>See More Like this</Text>
               </Pressable>
             </Pressable>
@@ -176,10 +158,10 @@ const Cart = () => {
         ))}
       </View>
     </ScrollView>
-  )
-}
+  );
+};
 
-export default Cart
+export default Cart;
 
 const styles = StyleSheet.create({
   container: {
@@ -188,11 +170,11 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
   },
-  containerScroll: { 
-    marginTop: 55, 
-    flex: 1, 
-    backgroundColor: "white"
-   },
+  containerScroll: {
+    marginTop: 55,
+    flex: 1,
+    backgroundColor: "white",
+  },
   containerPress: {
     flexDirection: "row",
     alignItems: "center",
@@ -212,7 +194,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     marginTop: 10,
   },
-  cartView:{
+  cartView: {
     backgroundColor: "white",
     marginVertical: 10,
     borderBottomColor: "#F0F0F0",
@@ -221,17 +203,17 @@ const styles = StyleSheet.create({
     borderTopWidth: 0,
     borderRightWidth: 0,
   },
-  cartPress:{
+  cartPress: {
     marginVertical: 10,
     flexDirection: "row",
     justifyContent: "space-between",
   },
-  cartPrice: { 
-    fontSize: 20, 
-    fontWeight: "bold", 
-    marginTop: 6
+  cartPrice: {
+    fontSize: 20,
+    fontWeight: "bold",
+    marginTop: 6,
   },
-  pressQuantity :{
+  pressQuantity: {
     marginTop: 15,
     marginBottom: 10,
     flexDirection: "row",
@@ -273,13 +255,12 @@ const styles = StyleSheet.create({
     borderColor: "#C0C0C0",
     borderWidth: 0.6,
   },
-  moreInfo:{
+  moreInfo: {
     backgroundColor: "white",
     paddingHorizontal: 8,
     paddingVertical: 10,
     borderRadius: 5,
     borderColor: "#C0C0C0",
     borderWidth: 0.6,
-  }
-
-})
+  },
+});
