@@ -126,8 +126,21 @@ const fetchAddresses = async () => {
                         <Text>Set as Default</Text>
                       </Pressable>
                     </View>
+                    <View>
+                      {selectedAddress && selectedAddress._id === address?._id && (
+                        <Pressable style={{
+                          padding: 10,
+                          borderRadius: 20,
+                          backgroundColor: "#008397",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          marginTop: 10
+                        }}>
+                          <Text style={{ textAlign: "center", color: "white"}}>Deliver to this address</Text>
+                        </Pressable>
+                      )}
+                    </View>
                   </View>
-                  
                 </Pressable>
               ))}
             </Pressable>
