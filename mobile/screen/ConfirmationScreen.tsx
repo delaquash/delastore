@@ -2,7 +2,7 @@ import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { userType } from "../context/useContext";
-import { AntDesign, Entypo, Feather, MaterialIcons } from "@expo/vector-icons";
+import { AntDesign, Entypo, Feather, MaterialIcons,FontAwesome5 } from "@expo/vector-icons";
 import { IAddressProps } from "../types/dataType";
 interface StepsData {
   title: string;
@@ -16,15 +16,13 @@ const ConfirmationScreen = () => {
     { title: "Payment", content: "Payment Details" },
     { title: "Place Order", content: "Order Summary" },
   ];
+  const [selectedAddress, setSelectedAddress] = useState("");
   const [currentStep, setCurrentStep] = useState<number>(0);
   const [addresses, setAddresses] = useState<IAddressProps[]>([]);
   const { setUserId, userId } = useContext(userType);
 
-  useEffect(() => {
-    fetchAddresses();
-  }, []);
 
-  const fetchAddresses = async () => {
+const fetchAddresses = async () => {
     try {
       const res = await axios.get(`/address/${userId}`);
       const { addresses } = res.data;
@@ -33,6 +31,11 @@ const ConfirmationScreen = () => {
       console.log("error", error);
     }
   };
+  useEffect(() => {
+    fetchAddresses();
+  }, []);
+
+  
   return (
     <ScrollView style={{ marginTop: 55 }}>
       <View style={{ flex: 1, paddingHorizontal: 20, paddingTop: 40 }}>
@@ -66,10 +69,22 @@ const ConfirmationScreen = () => {
               Select Delivery Address
             </Text>
             <Pressable>
-              {addresses.map((address, index) => (
+              {addresses?.map((address, index) => (
                 <Pressable style={styles.pressable}>
-                  <Entypo name="circle" size={24} color="black" />
-                  <View>
+                  {selectedAddress && selectedAddress._id === address?._id ? (
+                  <FontAwesome5 name="dot-circle" size={20} color="#008397" />
+                ) : (
+                  <Entypo
+                    onPress={() => setSelectedAddress(address)}
+                    name="circle"
+                    size={20}
+                    color="gray"
+                  />
+                )}
+
+
+
+                  <View style={{ marginLeft: 6 }}>
                     <View
                       style={{
                         flexDirection: "row",
@@ -112,8 +127,7 @@ const ConfirmationScreen = () => {
                       </Pressable>
                     </View>
                   </View>
-
-                  <View></View>
+                  
                 </Pressable>
               ))}
             </Pressable>
