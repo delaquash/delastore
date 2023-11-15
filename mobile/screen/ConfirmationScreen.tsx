@@ -130,14 +130,7 @@ const fetchAddresses = async () => {
                       {selectedAddress && selectedAddress._id === address?._id && (
                         <Pressable
                           onPress={()=> setCurrentStep(1)}
-                          style={{
-                            padding: 10,
-                            borderRadius: 20,
-                            backgroundColor: "#008397",
-                            justifyContent: "center",
-                            alignItems: "center",
-                            marginTop: 10
-                        }}>
+                          style={styles.currentStep}>
                           <Text style={{ textAlign: "center", color: "white"}}>Deliver to this address</Text>
                         </Pressable>
                       )}
@@ -203,6 +196,14 @@ const styles = StyleSheet.create({
     borderWidth: 0.9,
     borderColor: "#D0D0D0",
   },
+  currentStep:{
+                            padding: 10,
+                            borderRadius: 20,
+                            backgroundColor: "#008397",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            marginTop: 10
+                        },
   remove: {
     backgroundColor: "#F5F5F5",
     paddingHorizontal: 10,
