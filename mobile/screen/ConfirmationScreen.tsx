@@ -197,13 +197,13 @@ const styles = StyleSheet.create({
     borderColor: "#D0D0D0",
   },
   currentStep:{
-                            padding: 10,
-                            borderRadius: 20,
-                            backgroundColor: "#008397",
-                            justifyContent: "center",
-                            alignItems: "center",
-                            marginTop: 10
-                        },
+    padding: 10,
+    borderRadius: 20,
+    backgroundColor: "#008397",
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 10
+},
   remove: {
     backgroundColor: "#F5F5F5",
     paddingHorizontal: 10,
