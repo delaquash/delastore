@@ -18,6 +18,7 @@ const ConfirmationScreen = () => {
   ];
   const [selectedAddress, setSelectedAddress] = useState("");
   const [currentStep, setCurrentStep] = useState<number>(0);
+  const [ options, setOptions ] = useState<boolean>(false)
   const [addresses, setAddresses] = useState<IAddressProps[]>([]);
   const { setUserId, userId } = useContext(userType);
 
@@ -81,9 +82,6 @@ const fetchAddresses = async () => {
                     color="gray"
                   />
                 )}
-
-
-
                   <View style={{ marginLeft: 6 }}>
                     <View
                       style={{
@@ -140,8 +138,41 @@ const fetchAddresses = async () => {
               ))}
             </Pressable>
           </View>
-        )}
+        )}  
       </View>
+      {currentStep === 1 && (
+        <View style={{ marginHorizontal: 20 }}>
+          <Text style={{ fontSize: 20, fontWeight: "bold" }}>
+            Choose your delivery options.
+          </Text>
+          <View style={styles.entypoView}>
+            {options ? (
+              <FontAwesome5 name="dot-circle" size={20} color="#008397" />
+              
+            ): (
+                <Entypo
+                onPress={() => setOptions(!false)}
+                name="circle"
+                size={20}
+                color="gray"
+              />
+            )}
+            
+            <Text style={{ flex: 1 }}>
+              <Text style={{ color: "green", fontWeight:"bold" }}>
+                Tomorrow.
+              </Text>
+              -FREE Delivery with your Prime Membership.
+            </Text>
+          </View>
+          <Pressable
+            onPress={()=> setCurrentStep(2)}
+            style={styles.continueText}
+          >
+              <Text>Continue</Text>
+          </Pressable>
+        </View>
+      )}      
     </ScrollView>
   );
 };
@@ -220,4 +251,23 @@ const styles = StyleSheet.create({
     borderWidth: 0.9,
     borderColor: "#D0D0D0",
   },
+  continueText: {
+    backgroundColor: "#FFC72C",
+    padding: 10,
+    borderRadius: 20,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 5
+  },
+  entypoView: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "white",
+    padding: 8,
+    gap: 7,
+    borderColor: "#D0D0D0",
+    borderWidth: 1,
+    marginTop: 10,
+  },
+
 });
