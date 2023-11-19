@@ -1,7 +1,6 @@
+import React from "react";
 import { AntDesign, Feather } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import React from "react";
-
 import {
   Image,
   Pressable,
