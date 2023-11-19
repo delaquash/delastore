@@ -151,11 +151,11 @@ const fetchAddresses = async () => {
               
             ): (
                 <Entypo
-                onPress={() => setOptions(!false)}
-                name="circle"
-                size={20}
-                color="gray"
-              />
+                  onPress={() => setOptions(!false)}
+                  name="circle"
+                  size={20}
+                  color="gray"
+                />
             )}
             
             <Text style={{ flex: 1 }}>
@@ -172,7 +172,23 @@ const fetchAddresses = async () => {
               <Text>Continue</Text>
           </Pressable>
         </View>
-      )}      
+      )}
+      {currentStep === 2 && (
+        <View style={{ marginHorizontal: 20 }}>
+          <Text style={{ fontSize: 20, fontWeight: "bold" }}>
+            Select Your Payment Method...
+          </Text>
+          <View style={styles.payment}>
+            <Entypo
+              onPress={() => setOptions(!false)}
+              name="circle"
+              size={20}
+              color="gray"
+            />
+            <Text>Cash on Delivery...</Text>
+          </View>
+        </View>
+      )}
     </ScrollView>
   );
 };
@@ -269,5 +285,14 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginTop: 10,
   },
-
+  payment: {
+    backgroundColor: "white",
+    padding: 8,
+    borderColor: "#D0D0D0",
+    borderWidth: 1,
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 2,
+    marginTop: 12
+  }
 });
