@@ -255,10 +255,33 @@ const ConfirmationScreen = () => {
               <Text style={{ fontSize: 16, fontWeight: "500", color: "gray" }}>Items</Text>
               <Text style={{ color: "gray", fontSize: 16 }}>{total}</Text>
             </View>
+
+            <View style={styles.itemStyle}>
+              <Text style={{ fontSize: 16, fontWeight: "500", color: "gray" }}>Delivery</Text>
+              <Text style={{ color: "gray", fontSize: 16 }}>0.00</Text>
+            </View>
+
+            <View style={styles.itemStyle}>
+              <Text style={{ fontSize: 20, fontWeight: "bold" }}>Order Total</Text>
+              <Text style={{ color: "#C60C30", fontSize: 17, fontWeight: "bold" }}>{total}</Text>
+            </View>
           </View>
+
+          <View style={styles.addView}>
+            <Text style={{ fontSize: 16, color: "gray" }}>Pay With</Text>
+            <Text style={{ fontSize: 16, fontWeight: "600", marginTop: 7 }}>
+              Pay on delivery (Cash)
+            </Text>
+          </View>
+
+          <Pressable
+            // onPress={handlePlaceOrder}
+            style={styles.continueText}
+          >
+            <Text>Place your order</Text>
+          </Pressable>
         </View>
       )}
-    
     </ScrollView>
   );
 };
