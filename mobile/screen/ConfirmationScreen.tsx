@@ -10,6 +10,8 @@ import {
   FontAwesome5,
 } from "@expo/vector-icons";
 import { IAddressProps } from "../types/dataType";
+import { useSelector } from "react-redux";
+import { RootState } from "../store";
 interface StepsData {
   title: string;
   content: string;
@@ -22,12 +24,18 @@ const ConfirmationScreen = () => {
     { title: "Payment", content: "Payment Details" },
     { title: "Place Order", content: "Order Summary" },
   ];
-  const [selectedAddress, setSelectedAddress] = useState("");
+  const [selectedAddress, setSelectedAddress] = useState<any>("");
   const [currentStep, setCurrentStep] = useState<number>(0);
   const [options, setOptions] = useState<boolean>(false);
   const [paymentMethod, setPaymentMethod] = useState("");
   const [addresses, setAddresses] = useState<IAddressProps[]>([]);
   const { setUserId, userId } = useContext(userType);
+  
+  const cart = useSelector((state: RootState) => state.cart.cart);
+  
+  const total = cart
+    .map((item) => item.quantity * item.price)
+    .reduce((prev, current) => current + prev, 0);
 
   const fetchAddresses = async () => {
     try {
@@ -214,15 +222,43 @@ const ConfirmationScreen = () => {
               />
             )}
             <Text>Pay Using your Card</Text>
+          </View>
             <Pressable
               onPress={() => setCurrentStep(2)}
               style={styles.continueText}
             >
               <Text>Continue</Text>
           </Pressable>
+        </View>
+      )}
+
+      {currentStep === 3 && paymentMethod === "cash" && (
+        <View style={{ marginHorizontal: 20 }}>
+          <Text style={{ fontSize: 20, fontWeight: "bold" }}>
+            Order Now
+          </Text>
+          <View style={styles.percent}>
+            <View>
+              <Text style={{fontSize: 17, fontWeight: "bold" }}>
+                Save 5% and never run out
+             </Text>
+            </View>
+            <MaterialIcons
+              name="keyboard-arrow-right"
+              size={24}
+              color="black"
+            />
+          </View>
+          <View style={styles.addView}>
+            <Text> Shipping to {selectedAddress?.name}</Text>
+            <View style={styles.itemStyle}>
+              <Text style={{ fontSize: 16, fontWeight: "500", color: "gray" }}>Items</Text>
+              <Text style={{ color: "gray", fontSize: 16 }}>{total}</Text>
+            </View>
           </View>
         </View>
       )}
+    
     </ScrollView>
   );
 };
@@ -317,7 +353,7 @@ const styles = StyleSheet.create({
     gap: 7,
     borderColor: "#D0D0D0",
     borderWidth: 1,
-    marginTop: 10,
+    marginTop: 12,
   },
   payment: {
     backgroundColor: "white",
@@ -329,4 +365,29 @@ const styles = StyleSheet.create({
     gap: 2,
     marginTop: 12,
   },
+  percent: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "white",
+    justifyContent:"space-between",
+    padding: 8,
+    gap: 8,
+    borderColor: "#D0D0D0",
+    borderWidth: 1,
+    marginTop: 10
+  },
+  addView: {
+    padding: 8,
+    backgroundColor: "white",
+    borderColor: "#D0D0D0",
+    borderWidth: 1,
+    marginTop: 10
+  },
+  itemStyle:{
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginTop: 8,
+  },
+
 });
