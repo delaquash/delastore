@@ -2,7 +2,13 @@ import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { userType } from "../context/useContext";
-import { AntDesign, Entypo, Feather, MaterialIcons,FontAwesome5 } from "@expo/vector-icons";
+import {
+  AntDesign,
+  Entypo,
+  Feather,
+  MaterialIcons,
+  FontAwesome5,
+} from "@expo/vector-icons";
 import { IAddressProps } from "../types/dataType";
 interface StepsData {
   title: string;
@@ -18,12 +24,12 @@ const ConfirmationScreen = () => {
   ];
   const [selectedAddress, setSelectedAddress] = useState("");
   const [currentStep, setCurrentStep] = useState<number>(0);
-  const [ options, setOptions ] = useState<boolean>(false)
+  const [options, setOptions] = useState<boolean>(false);
+  const [paymentMethod, setPaymentMethod] = useState("");
   const [addresses, setAddresses] = useState<IAddressProps[]>([]);
   const { setUserId, userId } = useContext(userType);
 
-
-const fetchAddresses = async () => {
+  const fetchAddresses = async () => {
     try {
       const res = await axios.get(`/address/${userId}`);
       const { addresses } = res.data;
@@ -36,7 +42,6 @@ const fetchAddresses = async () => {
     fetchAddresses();
   }, []);
 
-  
   return (
     <ScrollView style={{ marginTop: 55 }}>
       <View style={{ flex: 1, paddingHorizontal: 20, paddingTop: 40 }}>
@@ -73,15 +78,15 @@ const fetchAddresses = async () => {
               {addresses?.map((address, index) => (
                 <Pressable style={styles.pressable}>
                   {selectedAddress && selectedAddress._id === address?._id ? (
-                  <FontAwesome5 name="dot-circle" size={20} color="#008397" />
-                ) : (
-                  <Entypo
-                    onPress={() => setSelectedAddress(address)}
-                    name="circle"
-                    size={20}
-                    color="gray"
-                  />
-                )}
+                    <FontAwesome5 name="dot-circle" size={20} color="#008397" />
+                  ) : (
+                    <Entypo
+                      onPress={() => setSelectedAddress(address)}
+                      name="circle"
+                      size={20}
+                      color="gray"
+                    />
+                  )}
                   <View style={{ marginLeft: 6 }}>
                     <View
                       style={{
@@ -125,20 +130,26 @@ const fetchAddresses = async () => {
                       </Pressable>
                     </View>
                     <View>
-                      {selectedAddress && selectedAddress._id === address?._id && (
-                        <Pressable
-                          onPress={()=> setCurrentStep(1)}
-                          style={styles.currentStep}>
-                          <Text style={{ textAlign: "center", color: "white"}}>Deliver to this address</Text>
-                        </Pressable>
-                      )}
+                      {selectedAddress &&
+                        selectedAddress._id === address?._id && (
+                          <Pressable
+                            onPress={() => setCurrentStep(1)}
+                            style={styles.currentStep}
+                          >
+                            <Text
+                              style={{ textAlign: "center", color: "white" }}
+                            >
+                              Deliver to this address
+                            </Text>
+                          </Pressable>
+                        )}
                     </View>
                   </View>
                 </Pressable>
               ))}
             </Pressable>
           </View>
-        )}  
+        )}
       </View>
       {currentStep === 1 && (
         <View style={{ marginHorizontal: 20 }}>
@@ -148,28 +159,27 @@ const fetchAddresses = async () => {
           <View style={styles.entypoView}>
             {options ? (
               <FontAwesome5 name="dot-circle" size={20} color="#008397" />
-              
-            ): (
-                <Entypo
-                  onPress={() => setOptions(!false)}
-                  name="circle"
-                  size={20}
-                  color="gray"
-                />
+            ) : (
+              <Entypo
+                onPress={() => setOptions(!false)}
+                name="circle"
+                size={20}
+                color="gray"
+              />
             )}
-            
+
             <Text style={{ flex: 1 }}>
-              <Text style={{ color: "green", fontWeight:"bold" }}>
+              <Text style={{ color: "green", fontWeight: "bold" }}>
                 Tomorrow.
               </Text>
               -FREE Delivery with your Prime Membership.
             </Text>
           </View>
           <Pressable
-            onPress={()=> setCurrentStep(2)}
+            onPress={() => setCurrentStep(2)}
             style={styles.continueText}
           >
-              <Text>Continue</Text>
+            <Text>Continue</Text>
           </Pressable>
         </View>
       )}
@@ -179,13 +189,37 @@ const fetchAddresses = async () => {
             Select Your Payment Method...
           </Text>
           <View style={styles.payment}>
-            <Entypo
-              onPress={() => setOptions(!false)}
-              name="circle"
-              size={20}
-              color="gray"
-            />
+            {paymentMethod === "cash" ? (
+              <FontAwesome5 name="dot-circle" size={20} color="#008397" />
+            ) : (
+              <Entypo
+                onPress={() => setPaymentMethod("cash")}
+                name="circle"
+                size={20}
+                color="gray"
+              />
+            )}
             <Text>Cash on Delivery...</Text>
+          </View>
+
+          <View style={styles.payment}>
+            {paymentMethod === "card" ? (
+              <FontAwesome5 name="dot-circle" size={20} color="#008397" />
+            ) : (
+              <Entypo
+                onPress={() => setPaymentMethod("card")}
+                name="circle"
+                size={20}
+                color="gray"
+              />
+            )}
+            <Text>Pay Using your Card</Text>
+            <Pressable
+              onPress={() => setCurrentStep(2)}
+              style={styles.continueText}
+            >
+              <Text>Continue</Text>
+          </Pressable>
           </View>
         </View>
       )}
@@ -243,14 +277,14 @@ const styles = StyleSheet.create({
     borderWidth: 0.9,
     borderColor: "#D0D0D0",
   },
-  currentStep:{
+  currentStep: {
     padding: 10,
     borderRadius: 20,
     backgroundColor: "#008397",
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 10
-},
+    marginTop: 10,
+  },
   remove: {
     backgroundColor: "#F5F5F5",
     paddingHorizontal: 10,
@@ -273,7 +307,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 5
+    marginTop: 5,
   },
   entypoView: {
     flexDirection: "row",
@@ -293,6 +327,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: 2,
-    marginTop: 12
-  }
+    marginTop: 12,
+  },
 });
