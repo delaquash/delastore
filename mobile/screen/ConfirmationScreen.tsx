@@ -10,14 +10,18 @@ import {
   FontAwesome5,
 } from "@expo/vector-icons";
 import { IAddressProps } from "../types/dataType";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store";
+import { useNavigation } from "@react-navigation/native";
+import { cleanCart } from "../reducers/cartReducer";
 interface StepsData {
   title: string;
   content: string;
 }
 
 const ConfirmationScreen = () => {
+  const navigation = useNavigation()
+  const dispatch = useDispatch()
   const steps: StepsData[] = [
     { title: "Address", content: "Address Form" },
     { title: "Delivery", content: "Delivery Options" },
@@ -49,6 +53,28 @@ const ConfirmationScreen = () => {
   useEffect(() => {
     fetchAddresses();
   }, []);
+
+  const handlePlaceOrder =async () => {
+    try {
+      const orderData = {
+        userId: userId,
+        totalPrice: total,
+        shippingAddress: selectedAddress,
+        paymentMethod: paymentMethod,
+        cartItems: cart
+      }
+      const res = await axios.post(`/order`, orderData)
+      if (res.status=== 200) {
+        navigation.navigate("Order");
+        dispatch(cleanCart())
+        console.log("Order created successfully.", res.data.order)
+      } else {
+console.log("Something went wrong..", res.data)
+      }
+    } catch (error) {
+      console.log("error", error);
+    }
+  }
 
   return (
     <ScrollView style={{ marginTop: 55 }}>
@@ -275,7 +301,7 @@ const ConfirmationScreen = () => {
           </View>
 
           <Pressable
-            // onPress={handlePlaceOrder}
+            onPress={handlePlaceOrder}
             style={styles.continueText}
           >
             <Text>Place your order</Text>
