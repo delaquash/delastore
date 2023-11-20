@@ -19,7 +19,7 @@ interface cartProps {
  * @access Private
  */
 
-const orders = async (req: Request, res: Response, next: NextFunction) => {
+const order = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { userId, cartItems, totalPrice, shippingAddress, paymentMethod } =
       req.body;
@@ -29,6 +29,7 @@ const orders = async (req: Request, res: Response, next: NextFunction) => {
       const error = errorHandler(message, 422);
       return next(error);
     }
+
     //   create an array of products objects form cartItems
     const product = cartItems.map((item: cartProps) => ({
       name: item?.title,
@@ -55,4 +56,4 @@ const orders = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-export { orders };
+export { order };
