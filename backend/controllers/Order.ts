@@ -7,7 +7,7 @@ import { generateSecretkey, sendVerificationEmail } from "../utils/verifyEmail";
 import { User } from "../models/userModel";
 
 interface cartProps {
-  name: string;
+  title: string;
   price: number;
   image: string;
   quantity: number;
@@ -31,10 +31,10 @@ const orders = async (req: Request, res: Response, next: NextFunction) => {
     }
     //   create an array of products objects form cartItems
     const product = cartItems.map((item: cartProps) => ({
-      name: item?.name,
+      name: item?.title,
       image: item?.image,
-      price: item?.price,
-      quantity: item?.quantity,
+      price: item.price,
+      quantity: item.quantity,
     }));
 
     const newOrder = new Order({
