@@ -9,6 +9,7 @@ dotenv.config();
 
 // route
 import registerRoute from "./routes/userRoutes";
+import orderRoute from "./routes/OrderRoute";
 connectDB();
 const app = express();
 app.use(cors());
@@ -33,6 +34,7 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 app.use("/", registerRoute);
+app.use("/", orderRoute);
 
 // error
 app.use((error: any, req: Request, res: Response, next: NextFunction) => {

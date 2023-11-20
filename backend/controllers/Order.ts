@@ -48,9 +48,11 @@ const orders = async (req: Request, res: Response, next: NextFunction) => {
     res
       .status(200)
       .json({ msg: "Order have been created and saved successfully.." });
-  } catch (error) {
+  } catch (error: any) {
     if (!error.status) error.status = 500;
     next(error);
     console.log(error);
   }
 };
+
+export { orders };

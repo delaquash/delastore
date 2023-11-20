@@ -153,4 +153,4 @@ const userProfile = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-export { address, login, register, userAdress };
+export { address, login, register, userAdress, userProfile };
