@@ -36,6 +36,18 @@ const orders = async (req: Request, res: Response, next: NextFunction) => {
       price: item?.price,
       quantity: item?.quantity,
     }));
+
+    const newOrder = new Order({
+      userId,
+      cartItems,
+      totalPrice,
+      shippingAddress,
+      paymentMethod,
+    });
+    await newOrder.save();
+    res
+      .status(200)
+      .json({ msg: "Order have been created and saved successfully.." });
   } catch (error) {
     if (!error.status) error.status = 500;
     next(error);
