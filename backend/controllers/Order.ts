@@ -23,7 +23,7 @@ const orders = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { userId, cartItems, totalPrice, shippingAddress, paymentMethod } =
       req.body;
-    const user = User.findById(userId);
+    const user = await User.findById(userId);
     if (!user) {
       const message = "User not found. Please sign up...";
       const error = errorHandler(message, 422);
