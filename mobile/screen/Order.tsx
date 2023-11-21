@@ -2,8 +2,15 @@ import { StyleSheet, Text, View,SafeAreaView } from "react-native";
 import React ,{useEffect} from "react";
 import LottieView from "lottie-react-native";
 import { useNavigation } from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack";
 
 const Order = () => {
+  const navigation = useNavigation<StackNavigationProp<{Main: any}>>();
+  useEffect(() => {
+    setTimeout(() => {
+      navigation.replace("Main");
+    }, 1300);
+  },[])
   return (
     <SafeAreaView style={{ backgroundColor: "white", flex: 1 }}>
     <LottieView
@@ -21,7 +28,6 @@ const Order = () => {
       speed={0.7}
     />
 
-    {/* 09040547464 */}
     <Text
       style={{
         marginTop: 20,
