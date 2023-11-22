@@ -1,6 +1,7 @@
-import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { Alert, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
+import {FlutterwaveInit} from 'flutterwave-react-native';
 import { userType } from "../context/useContext";
 import {
   AntDesign,
@@ -76,6 +77,60 @@ console.log("Something went wrong..", res.data)
     }
   }
 
+  const handleCard = () => {
+    setPaymentMethod("card");
+    Alert.alert("Debit Card Method", "Pay Online", [
+      {
+        text: "Cancel",
+        onPress: () => console.log("Cancelled is Pressed")
+      },
+      {
+        text: "Ok",
+        onPress:()=> pay()
+      }
+    ])
+  }
+
+  interface RedirectParams {
+    status: 'successful' | 'cancelled';
+    transaction_id?: string;
+    tx_ref: string;
+  }
+
+ /* An example function called when transaction is completed successfully or canceled */
+  const handleOnRedirect = (data: RedirectParams) => {
+      console.log(data);
+    };
+
+/* An example function to generate a random transaction reference */
+  const generateTransactionRef = (length: number) => {
+    var result = '';
+    var characters =
+      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var charactersLength = characters.length;
+    for (var i = 0; i < length; i++) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return `flw_tx_ref_${result}`;
+  };
+
+  const pay = async () => {
+    try {
+      const paymentLink = await FlutterwaveInit({
+        amount: total,
+        currency: "NGN",
+        redirect_url: "",
+        authorization: "",
+        tx_ref: generateTransactionRef(),
+        customer: {
+            email: 'customer-email@example.com',
+          },
+        payment_options: 'card',
+      })
+    } catch (error) {
+      
+    }
+  }
   return (
     <ScrollView style={{ marginTop: 55 }}>
       <View style={{ flex: 1, paddingHorizontal: 20, paddingTop: 40 }}>
@@ -241,7 +296,7 @@ console.log("Something went wrong..", res.data)
               <FontAwesome5 name="dot-circle" size={20} color="#008397" />
             ) : (
               <Entypo
-                onPress={() => setPaymentMethod("card")}
+                onPress={handleCard}
                 name="circle"
                 size={20}
                 color="gray"
