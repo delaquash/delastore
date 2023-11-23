@@ -121,7 +121,7 @@ console.log("Something went wrong..", res.data)
         currency: "NGN",
         redirect_url: "",
         authorization: "",
-        tx_ref: generateTransactionRef(),
+        tx_ref: generateTransactionRef(total),
         customer: {
             email: 'customer-email@example.com',
           },
