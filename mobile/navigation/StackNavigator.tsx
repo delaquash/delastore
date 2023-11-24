@@ -10,12 +10,20 @@ import Cart from '../screen/Cart';
 import Profile from '../screen/Profile';
 import ProductInfo from '../screen/ProductInfo';
 import { createStackNavigator } from '@react-navigation/stack';
+import AddAddressScreen from '../screen/AddAddressScreen';
+import AddressScreen from '../screen/AddScreen';
+import ConfirmationScreen from '../screen/ConfirmationScreen';
+import Order from '../screen/Order';
 
 
 export type ScreenStackParamList = {
     Login: undefined
     Register: undefined
     Main: undefined
+    Address: undefined
+    Add: undefined
+  Confirm: undefined
+    Order: undefined
     Info: { carouselImage: string[], titles: string, prices: number}
 }
 
@@ -99,6 +107,26 @@ const StackNavigator = () => {
           component={ProductInfo}
           options={{ headerShown: false }}
           initialParams={{}}
+        />
+        <Stack.Screen 
+          name="Address"
+          component={AddAddressScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen 
+          name="Add"
+          component={AddressScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen 
+          name="Confirm"
+          component={ConfirmationScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen 
+          name="Order"
+          component={Order}
+          options={{ headerShown: false }}
         />
       </Stack.Navigator>
     </NavigationContainer>

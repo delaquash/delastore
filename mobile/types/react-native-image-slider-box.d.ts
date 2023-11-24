@@ -27,7 +27,8 @@ declare module "react-native-image-slider-box" {
     imageLoadingIndicatorColor?: string;
     style?: ViewStyle;
     ImageComponentStyle?: any;
+    
   }
 
-  export default class ImageSliderBox extends React.Component<ImageSliderBoxProps> {}
+  export default class SliderBox extends React.Component<ImageSliderBoxProps> {}
 }

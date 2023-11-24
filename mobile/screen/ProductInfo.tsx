@@ -16,8 +16,12 @@ import {
     TextInput,
     View,
 } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
+import { CartProps, addToCart } from "../reducers/cartReducer";
+import { RootState } from "../store";
 
 const ProductInfo = () => {
+  const cart = useSelector((state:RootState)=> state.cart.cart);
   const route: RouteProp<
     {
       params: {
@@ -26,14 +30,28 @@ const ProductInfo = () => {
         price: number;
         color: string;
         size: string;
+        item: string | CartProps
       };
     },
     "params"
   > = useRoute();
+
+
   const { width } = Dimensions.get("window");
   const navigation = useNavigation();
   const [addedToCart, setAddedToCart] = useState(false);
   const height = (width * 100) / 100;
+  const dispatch = useDispatch();
+
+
+  const addItemToCart=(item:  CartProps) => {
+    setAddedToCart(false)
+    dispatch(addToCart(item))
+    setTimeout(()=> {
+      setAddedToCart(true)
+    },2500)    
+  }
+
   return (
     <ScrollView
       style={styles.scrollViewContainer}
@@ -125,7 +143,7 @@ const ProductInfo = () => {
       <Text style={styles.stockText}>IN Stock</Text>
 
       <Pressable
-        // onPress={() => addItemToCart(route?.params?.item)}
+        onPress={() => addItemToCart(route.params.item)}
         style={styles.cart}
       >
         {addedToCart ? (

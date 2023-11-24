@@ -9,6 +9,7 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@gorhom/bottom-sheet": "^4.5.1",
     "@react-native-async-storage/async-storage": "1.18.2",
     "@react-native-google-signin/google-signin": "^10.0.1",
     "@react-navigation/bottom-tabs": "^6.5.8",
@@ -21,16 +22,20 @@
     "expo": "~49.0.10",
     "expo-splash-screen": "^0.20.5",
     "expo-status-bar": "~1.6.0",
+    "flutterwave-react-native": "^1.0.4",
     "jwt-decode": "^3.1.2",
     "lottie-react-native": "5.1.6",
+    "patch-package": "^8.0.0",
+    "postinstall-postinstall": "^2.1.0",
     "react": "18.2.0",
     "react-dom": "^18.2.0",
     "react-native": "0.72.5",
     "react-native-dropdown-picker": "^5.4.6",
-    "react-native-gesture-handler": "^2.13.1",
+    "react-native-gesture-handler": "~2.12.0",
     "react-native-image-slider-box": "^2.0.7",
     "react-native-modals": "^0.22.3",
     "react-native-razorpay": "^2.3.0",
+    "react-native-reanimated": "~3.3.0",
     "react-native-safe-area-context": "4.6.3",
     "react-native-screens": "~3.22.0",
     "react-native-web": "~0.19.6",
@@ -40,8 +45,10 @@
     "@babel/core": "^7.20.0",
     "@types/react": "~18.2.14",
     "@types/react-native": "^0.72.2",
+    "babel-plugin-module-resolver": "^5.0.0",
+    "deprecated-react-native-prop-types": "^4.2.1",
     "typescript": "^5.1.3"
   },
   "private": true,
-  "proxy": "http://localhost:5000"
+  "proxy": "https://6bcd-41-58-130-147.ngrok-free.app/"
 }

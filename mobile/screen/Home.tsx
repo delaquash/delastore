@@ -2,10 +2,12 @@ import {
   AntDesign,
   Feather,
   Ionicons,
-  MaterialIcons,
+  MaterialIcons
 } from "@expo/vector-icons";
+
+import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
-import React, { useCallback, useEffect, useState } from "react";
+
 import {
   Image,
   Platform,
@@ -15,25 +17,51 @@ import {
   StyleSheet,
   Text,
   TextInput,
-  View,
+  View
 } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 import { SliderBox } from "react-native-image-slider-box";
+import { useSelector } from "react-redux";
 import ProductItem from "../component/ProductItem";
 import { deals, images, list, offers } from "../data";
+import { RootState } from "../store";
 import { ItemProps, Product } from "../types/types";
-import { useNavigation } from "@react-navigation/native";
-// import { useSelector } from "react-redux";
-// import { BottomModal, SlideAnimation, ModalContent } from "react-native-modals";
-// import AsyncStorage from "@react-native-async-storage/async-storage";
-// import { UserType } from "../UserContext";
-// import jwt_decode from "jwt-decode";
+// import BottomModalComponent from "../component/BottomModal";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import jwt_decode from "jwt-decode";
+import React, { useCallback, useContext, useEffect, useState } from 'react';
+import BottomModal from "../component/BottomModal";
+import { userType } from "../context/useContext";
+
+
+interface DecodedToken {
+  userId: string;
+  // Add other properties from your decoded token if necessary
+}
+
+export interface IAddressProps {
+  name: string;
+  houseNo: number;
+  landmark: string;
+  street: string;
+}
 
 const Home = () => {
+  const initialAddress: IAddressProps = {
+    name: '',
+    houseNo: 0,
+    landmark: '',
+    street: ''
+  };
+  const navigation = useNavigation();
+  const { userId, setUserId } = useContext(userType)
+  const cart = useSelector((state: RootState) => state.cart.cart);
   const [open, setOpen] = useState(false);
-  const navigation = useNavigation()
+  const [visibleModal, setVisibleModal] = useState(false)
   const [products, setProducts] = useState<Product[]>([]);
-  const [category, setCategory] = useState<string>("jewelry");
+  const [addresses, setAddresses] = useState<[]>([]);
+  const [selectedAddress, setSelectedAdress] = useState<IAddressProps>(initialAddress);
+  const [category, setCategory] = useState<string>("jewelery");
   const [items, setItems] = useState<ItemProps[]>([
     { label: "Men's clothing", value: "men's clothing" },
     { label: "jewelery", value: "jewelery" },
@@ -41,13 +69,11 @@ const Home = () => {
     { label: "women's clothing", value: "women's clothing" },
   ]);
 
-// 09040547464
-
   useEffect(() => {
     const fetchData = async () => {
       try {
         const res = await axios.get("https://fakestoreapi.com/products");
-        setProducts(res.data);
+        setProducts(res.data as []);
       } catch (error) {
         console.log(error, "error message");
       }
@@ -55,138 +81,212 @@ const Home = () => {
     fetchData();
   }, []);
 
+
+  useEffect(() => {
+    if (userId) {
+      fetchAddresses()
+    }
+  }, [userId, visibleModal])
+
+
+  const fetchAddresses = async () => {
+    try {
+      const res = await axios.get(`/address/${userId}`)
+      const { addresses } = res.data
+      setAddresses(addresses)
+    } catch (error) {
+      console.log("error", error);
+    }
+  }
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const token: string | null = await AsyncStorage.getItem('authToken');
+
+        if (token) {
+          const decodedToken: DecodedToken = jwt_decode(token);
+          const userId: string = decodedToken.userId;
+          setUserId(userId);
+        }
+      } catch (error) {
+        // Handle errors, e.g., AsyncStorage or decoding errors
+        console.error('Error fetching user:', error);
+      }
+    };
+
+    fetchUser();
+  }, []);
+
   const onGenderOpen = useCallback(() => {
     setOpen(!open);
   }, []);
 
-  return (
-    <SafeAreaView style={styles.safeAreaView}>
-      <ScrollView>
-        <View style={styles.viewStyle}>
-          <Pressable style={styles.pressable}>
-            <AntDesign
-              style={{ paddingLeft: 10 }}
-              name="search1"
-              size={22}
-              color="black"
-            />
-            <TextInput placeholder="Search for your favourite products " />
-          </Pressable>
-          <Feather name="mic" size={24} color="black" />
-        </View>
-        <Pressable style={styles.pressableLocation}>
-          <Ionicons name="location-outline" size={24} color="black" />
-          <Pressable>
-            <Text style={styles.address}>
-              42, Ayonnuga Street, Ikoyi Boulevard
-            </Text>
-          </Pressable>
-          <MaterialIcons name="keyboard-arrow-down" size={24} color="black" />
-        </Pressable>
+  const modalKey = () => {
+    setVisibleModal(!visibleModal)
+  }
 
-        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-          {list.map((item, index) => (
-            <Pressable key={index} style={styles.preesableList}>
-              <Image source={{ uri: item.image }} style={styles.scrollImage} />
-              <Text style={styles.scrollImgText}>{item.name}</Text>
-            </Pressable>
-          ))}
-        </ScrollView>
-        <SliderBox
-          images={images}
-          autoplay
-          circleLoop
-          dotColor={"#13274F"}
-          inactiveDotColor="#90A4AE"
-          ImageComponentStyle={{ width: "100%" }}
-        />
-        <Text style={styles.trendDeals}>Trending Deals of the week</Text>
-        <View style={styles.dealsView}>
-          {deals.map((deal, index) => (
-            <Pressable key={index} style={styles.dealPressable}>
-              <Image source={{ uri: deal.image }} style={styles.dealsImage} />
-            </Pressable>
-          ))}
-        </View>
-        <Text style={styles.borderlineText} />
-        <Text style={styles.todayDeals}>Today's Deals</Text>
-        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-          {offers.map((item, index) => (
-            <Pressable
-              onPress={()=> navigation.navigate("Info", {
-              id: item.id,
-              title: item.title,
-              price: item.price,
-              carouselImage: item.carouselImages,
-              color: item.color,
-              size: item.size,
-              oldPrice: item.oldPrice,
-              item: item
-            })} 
-              key={index} 
-              style={styles.pressableOffers}
-            >
-              <Image
-                source={{ uri: item.image }}
-                style={{ width: 150, height: 150, resizeMode: "contain" }}
+  return (
+    <>
+      <SafeAreaView style={styles.safeAreaView}>
+        <ScrollView>
+          <View style={styles.viewStyle}>
+            <Pressable style={styles.pressable}>
+              <AntDesign
+                style={{ paddingLeft: 10 }}
+                name="search1"
+                size={22}
+                color="black"
               />
-              <View style={styles.itemView}>
-                <Text style={styles.itemText}> Upto {item.offer}</Text>
-              </View>
+              <TextInput placeholder="Search for your favourite products " />
             </Pressable>
-          ))}
-        </ScrollView>
-        <Text style={styles.borderlineText} />
-        <View
-          style={{
+            <Feather name="mic" size={24} color="black" />
+          </View>
+          <Pressable
+            onPress={modalKey}
+            style={styles.pressableLocation}
+          >
+            <Ionicons name="location-outline" size={24} color="black" />
+            <Pressable>
+              {selectedAddress ? (
+                <Text>
+                    Deliver to {selectedAddress.name} - {selectedAddress.street}
+                </Text>
+              ): (
+                <Text style={{ fontSize: 13, fontWeight: "500" }}>
+                  Add a Address
+                </Text>
+              )}
+
+            </Pressable>
+            <MaterialIcons name="keyboard-arrow-down" size={24} color="black" />
+          </Pressable>
+
+          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+            {list.map((item, index) => (
+              <Pressable key={index} style={styles.preesableList}>
+                <Image source={{ uri: item.image }} style={styles.scrollImage} />
+                <Text style={styles.scrollImgText}>{item.name}</Text>
+              </Pressable>
+            ))}
+          </ScrollView>
+          <SliderBox
+            images={images}
+            autoplay
+            circleLoop
+            dotColor={"#13274F"}
+            inactiveDotColor="#90A4AE"
+            ImageComponentStyle={{ width: "100%" }}
+          />
+          <Text style={styles.trendDeals}>Trending Deals of the week</Text>
+          <View style={styles.dealsView}>
+            {deals.map((deal, index) => (
+              <Pressable
+                onPress={() => navigation.navigate("Info", {
+                  id: deal.id,
+                  title: deal.title,
+                  image: deal.image,
+                  price: deal.price,
+                  color: deal.color,
+                  size: deal.size,
+                  carouselImage: deal.carouselImages,
+                  oldPrice: deal.oldPrice,
+                  item: deal
+                })}
+                key={index}
+                style={styles.dealPressable}
+
+              >
+                <Image source={{ uri: deal.image }} style={styles.dealsImage} />
+              </Pressable>
+            ))}
+          </View>
+          <Text style={styles.borderlineText} />
+          <Text style={styles.todayDeals}>Today's Deals</Text>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+            {offers.map((item, index) => (
+              <Pressable
+                onPress={() => navigation.navigate("Info", {
+                  id: item.id,
+                  title: item.title,
+                  price: item.price,
+                  carouselImage: item.carouselImages,
+                  color: item.color,
+                  size: item.size,
+                  oldPrice: item.oldPrice,
+                  item: item
+                })}
+                key={index}
+                style={styles.pressableOffers}
+              >
+                <Image
+                  source={{ uri: item.image }}
+                  style={{ width: 150, height: 150, resizeMode: "contain" }}
+                />
+                <View style={styles.itemView}>
+                  <Text style={styles.itemText}> Upto {item.offer}</Text>
+                </View>
+              </Pressable>
+            ))}
+          </ScrollView>
+          <Text style={styles.borderlineText} />
+          <View style={{
             marginHorizontal: 10,
             marginTop: 20,
             width: "45%",
             marginBottom: open ? 50 : 15,
           }}
-        >
-          <DropDownPicker
-            style={{
-              borderColor: "#B7B7B7",
-              height: 30,
-              marginBottom: open ? 120 : 15,
-            }}
-            open={open}
-            value={category} //genderValue
-            items={items}
-            setOpen={setOpen}
-            setValue={setCategory}
-            setItems={setItems}
-            // placeholder={"choose category..."}
-            placeholderStyle={styles.placeholderStyles}
-            onOpen={onGenderOpen}
-            // onChangeValue={onChange}
-            zIndex={3000}
-            zIndexInverse={1000}
-          />
-        </View>
+          >
+            <DropDownPicker
+              style={{
+                borderColor: "#B7B7B7",
+                height: 30,
+                marginBottom: open ? 120 : 15,
+              }}
+              open={open}
+              value={category} //genderValue
+              items={items}
+              setOpen={setOpen}
+              setValue={setCategory}
+              setItems={setItems}
+              // placeholder={"choose category..."}
+              placeholderStyle={styles.placeholderStyles}
+              onOpen={onGenderOpen}
+              // onChangeValue={onChange}
+              zIndex={3000}
+              zIndexInverse={1000}
+            />
+          </View>
 
-        <View style={styles.productView}>
-          {products
-            ?.filter((product) => product.category === category)
-            .map((product, index) => (
-              <ProductItem
-                key={index}
-                image={product.image}
-                title={product.title}
-                price={product.price}
-                rating={product.rating}
-              />
-            ))}
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+          <View style={styles.productView}>
+            {products
+              ?.filter((product) => product.category === category)
+              .map((product, index) => (
+                <ProductItem
+                  key={index}
+                  image={product.image}
+                  title={product.title}
+                  price={product.price}
+                  rating={product.rating}
+                />
+              ))}
+          </View>
+        </ScrollView>
+      </SafeAreaView>
+      {visibleModal && <BottomModal />}
+
+    </>
   );
 };
+
+
+// 7142335262
+// fairmoney
 
 export default Home;
 
 const styles = StyleSheet.create({
+
   safeAreaView: {
     paddingTop: Platform.OS === "android" ? 40 : 0,
     flex: 1,
@@ -298,4 +398,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flexWrap: "wrap",
   },
+  // bottomSheetContainer:{
+  //   flex: 1,
+  //   padding: 24,
+  //   justifyContent: 'center',
+  //   backgroundColor: 'grey'
+  // },
+  // bottomContentContainer: {
+  //   flex: 1,
+  //   alignItems: 'center',
+  // },
 });

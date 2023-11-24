@@ -36,13 +36,11 @@ const register = async (req: Request, res: Response, next: NextFunction) => {
     // save new user
     const result = await newUser.save();
 
-    return res
-      .status(201)
-      .json({
-        message:
-          "Registration successful. Please check your email for verification.",
-        user: result,
-      });
+    return res.status(201).json({
+      message:
+        "Registration successful. Please check your email for verification.",
+      user: result,
+    });
   } catch (error: any) {
     if (!error.status) {
       error.status = 500;
@@ -79,4 +77,80 @@ const login = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-export { login, register };
+/**
+ * Create new order
+ * @route address /address
+ * @access Private
+ */
+
+const address = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { userId, address } = req.body;
+    const user = await User.findById(userId);
+    // if there is no user
+    if (!user) {
+      const message = "User not found...";
+      const error = errorHandler(message, 404);
+      return next(error);
+    }
+    // if there is a user
+    user.addresses.push(address);
+    // save new user address
+    await user.save();
+  } catch (error: any) {
+    if (!error.status) error.status = 500;
+    next(error);
+    console.log(error);
+  }
+};
+
+/**
+ * Create new order
+ * @route address/:userID
+ * @access Private
+ */
+
+const userAdress = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const userId = req.params.userId;
+    const user = await User.findById(userId);
+    // if there is no user
+    if (!user) {
+      const message = "User not found...";
+      const error = errorHandler(message, 404);
+      return next(error);
+    }
+    const addresses = user.addresses;
+    res.status(200).json({ address });
+  } catch (error: any) {
+    if (!error.status) error.status = 500;
+    next(error);
+    console.log(error);
+  }
+};
+
+/**
+ * Create new order
+ * @route profile/:userId
+ * @access Private
+ */
+
+const userProfile = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const userId = req.params.userId;
+    const user = await User.findById({ userId });
+    // if there is no user
+    if (!user) {
+      const message = "User not found...";
+      const error = errorHandler(message, 404);
+      return next(error);
+    }
+    res.json(200).json({ user });
+  } catch (error: any) {
+    if (!error.status) error.status = 500;
+    next(error);
+    console.log(error);
+  }
+};
+
+export { address, login, register, userAdress, userProfile };

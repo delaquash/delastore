@@ -1,5 +1,5 @@
-import axios from "axios";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from "axios";
 
 let token;
 
@@ -31,7 +31,7 @@ if(token){
 }
 
 const api = axios.create({
-    baseURL: "https://9e60-102-89-42-233.ngrok-free.app",
+    baseURL: "https://6bcd-41-58-130-147.ngrok-free.app",
     headers,  // base url
 })
 

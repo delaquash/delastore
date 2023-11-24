@@ -1,19 +1,22 @@
-import { StyleSheet } from 'react-native';
-import StackNavigator from './navigation/StackNavigator';
+import "react-native-gesture-handler";
+
+// import { ModalPortal } from 'react-native-modals';
+import { Provider } from "react-redux";
+import { UserContext } from "./context/useContext";
+import StackNavigator from "./navigation/StackNavigator";
+import { store } from "./store";
 
 export default function App() {
   return (
     <>
-      <StackNavigator />
+      <Provider store={store}>
+        <UserContext>
+          <StackNavigator />
+          {/* <ModalPortal /> */}
+        </UserContext>
+      </Provider>
     </>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+
